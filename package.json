@@ -1,0 +1,63 @@
+{
+  "name": "dam-campus",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server/server.js",
+  "scripts": {
+    "hotloader": "webpack serve --config ./webpack.config.js --mode development --port 5050",
+    "start": "nodemon --ignore client/",
+    "build": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "author": "",
+  "license": "ISC",
+  "homepage": "",
+  "engines": {
+    "node": ">=18.x"
+  },
+  "dependencies": {
+    "@mantine/core": "^7.4.2",
+    "@mantine/hooks": "^7.4.2",
+    "@next/font": "^14.1.0",
+    "@react-oauth/google": "^0.6.0",
+    "@types/jest": "^29.5.11",
+    "@types/node": "^20.11.5",
+    "@types/react": "^18.2.48",
+    "@types/react-dom": "^18.2.18",
+    "connect-ensure-login": "^0.1.1",
+    "core-js": "^3.27.2",
+    "express": "^4.17.1",
+    "express-session": "^1.17.1",
+    "google-auth-library": "^8.7.0",
+    "gsap": "^3.12.5",
+    "jwt-decode": "^3.1.2",
+    "mongoose": "^6.9.0",
+    "nodemon": "^2.0.6",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.7.0",
+    "smooth-scrollbar": "^8.8.4",
+    "socket.io": "^2.3.0",
+    "socket.io-client": "^2.3.1",
+    "typescript": "^5.3.3",
+    "url-loader": "^4.1.1"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.23.4",
+    "@babel/core": "^7.23.6",
+    "@babel/preset-env": "^7.23.6",
+    "@babel/preset-react": "^7.23.3",
+    "babel-loader": "^9.1.2",
+    "css-loader": "^6.7.3",
+    "dotenv": "^16.3.2",
+    "file-loader": "^6.2.0",
+    "html-webpack-plugin": "^5.5.0",
+    "style-loader": "^3.3.1",
+    "webpack": "^5.75.0",
+    "webpack-cli": "^5.0.1",
+    "webpack-dev-server": "^4.11.1"
+  }
+}

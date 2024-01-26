@@ -1,0 +1,56 @@
+@import url("https://fonts.googleapis.com/css2?family=Poor+Story&display=swap");
+
+.Title-container {
+  width: 100%;
+  height: 100vh;
+  overflow-x: hidden;
+  text-align: center;
+}
+
+h1 {
+  font-size: 70px;
+  font-family: "Poor Story", system-ui;
+  font-weight: 400;
+  font-style: normal;
+}
+
+h3 {
+  font-size: 40px;
+  font-family: "Poor Story", system-ui;
+  font-weight: 400;
+  font-style: normal;
+}
+
+body {
+  font-size: 20px;
+  font-family: "Courier New", monospace;
+  font-weight: 200;
+  line-height: 200%;
+}
+
+.Button-container {
+  /* margin-top: 5px;
+  margin-left: 5px; */
+  bottom: 0;
+  left: 0;
+  background-color: #9b6b5e;
+  /* width: 20px; /* idk why but setting width to any dimension makes it so that
+               only the button and not the entire top bar is clickable */
+}
+
+.Tutorial-container {
+  width: 100%;
+  height: 100vh;
+  overflow-x: hidden;
+  text-align: center;
+}
+
+.section {
+  height: 100vh;
+  align-items: center;
+  justify-content: center;
+}
+
+.color-dark {
+  color: #fff; /* text color of dark section */
+}
