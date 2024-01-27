@@ -11,12 +11,56 @@ const express = require("express");
 
 // import models so we can interact with the database
 const User = require("./models/user");
+const Story = require("./models/story");
+const Comment = require("./models/comment");
 
 // import authentication library
 const auth = require("./auth");
 
 // api endpoints: all these paths will be prefixed with "/api/"
 const router = express.Router();
+
+//
+// from demo start
+router.get("/stories", (req, res) => {
+  // empty selector means get all documents
+  Story.find({}).then((stories) => res.send(stories));
+});
+
+router.post("/story", auth.ensureLoggedIn, (req, res) => {
+  const newStory = new Story({
+    creator_id: req.user._id,
+    creator_name: req.user.name,
+    content: req.body.content,
+  });
+
+  newStory.save().then((story) => res.send(story));
+});
+
+router.get("/comment", (req, res) => {
+  Comment.find({ parent: req.query.parent }).then((comments) => {
+    res.send(comments);
+  });
+});
+
+router.post("/comment", auth.ensureLoggedIn, (req, res) => {
+  const newComment = new Comment({
+    creator_id: req.user._id,
+    creator_name: req.user.name,
+    parent: req.body.parent,
+    content: req.body.content,
+  });
+
+  newComment.save().then((comment) => res.send(comment));
+});
+
+router.get("/user", (req, res) => {
+  User.findById(req.query.userid).then((user) => {
+    res.send(user);
+  });
+});
+// from demo end
+//
 
 //initialize socket
 const socketManager = require("./server-socket");

@@ -6,6 +6,7 @@ import jwt_decode from "jwt-decode";
 import NotFound from "./pages/NotFound.js";
 import Home from "./pages/Home.jsx";
 import Map from "./pages/Map.js";
+import Feed from "./pages/Feed.js";
 
 import "../utilities.css";
 
@@ -52,6 +53,7 @@ const App = () => {
         element={<Home handleLogin={handleLogin} handleLogout={handleLogout} userId={userId} />}
       />
       <Route path="/map" element={<Map />} />
+      <Route path="/feed" element={<Feed />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
   );

@@ -137,7 +137,7 @@ const getBeaverAngle = () => {
 
 // draw!
 
-export const draw = (count, canvasRef) => {
+export const draw = (countFrame, canvasRef) => {
   canvas = canvasRef.current;
   if (!canvas) {
     return;

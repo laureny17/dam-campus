@@ -1,8 +1,9 @@
-canvas {
+.map_canvas {
   background-color: rgb(215, 185, 165);
   width: 100vw;
   height: 100vh;
-  object-fit: contain; /* so that resizing window doesn't cause problems */
+  /* so that resizing window doesn't cause problems */
+  object-fit: contain;
   position: absolute;
 }
 

@@ -1,6 +1,3 @@
-// why is this under pages folder :(
-// try moving later
-
 import "./Canvas.css";
 import React, { useState, useEffect, useRef } from "react";
 import { draw } from "../../canvas-manager";
@@ -35,7 +32,15 @@ const Canvas = (props) => {
     return () => window.cancelAnimationFrame(animationID); // https://www.youtube.com/watch?v=tev71VzEJos
   }, [draw]);
 
-  return <canvas ref={canvasRef} width={innerWidth} height={innerHeight} />;
+  return (
+    <canvas
+      class="map_canvas"
+      path="/map"
+      ref={canvasRef}
+      width={innerWidth}
+      height={innerHeight}
+    />
+  );
 };
 
 export default Canvas;
