@@ -256,7 +256,7 @@ export const draw = (countFrame, canvasRef) => {
   ) {
     window.setTimeout(50);
   }
-  // draw beaver on top of map piece, rotated at desired angle:
+  // draw beaver on top of map, rotated at desired angle:
   context.save();
   context.translate(canvas.width / 2, canvas.height / 2);
   context.rotate(angle);

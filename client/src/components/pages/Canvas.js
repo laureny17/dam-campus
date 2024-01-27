@@ -34,7 +34,7 @@ const Canvas = (props) => {
 
   return (
     <canvas
-      class="map_canvas"
+      className="map_canvas"
       path="/map"
       ref={canvasRef}
       width={innerWidth}
