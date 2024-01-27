@@ -241,20 +241,39 @@ export const draw = (countFrame, canvasRef) => {
   }
   const angle = (getBeaverAngle() / 180) * Math.PI;
 
-  // find color underneath beaver
-  const colorUnderneath = context.getImageData(
-    context.canvas.width / 2,
-    context.canvas.height / 2,
-    1,
-    1
-  );
-  // if color underneath is beige, it means the map hasn't loaded in yet
-  if (
-    colorUnderneath.data[0] === BACKGROUND_R &&
-    colorUnderneath.data[1] === BACKGROUND_G &&
-    colorUnderneath.data[2] === BACKGROUND_B
-  ) {
-    window.setTimeout(50);
+  // // find color underneath beaver
+  // const colorUnderneath = context.getImageData(
+  //   context.canvas.width / 2,
+  //   context.canvas.height / 2,
+  //   1,
+  //   1
+  // );
+  // // if color underneath is beige, it means the map hasn't loaded in yet
+  // if (
+  //   colorUnderneath.data[0] === BACKGROUND_R &&
+  //   colorUnderneath.data[1] === BACKGROUND_G &&
+  //   colorUnderneath.data[2] === BACKGROUND_B
+  // ) {
+  //   window.setTimeout(50);
+  // }
+  function bgLoaded() {
+    let colorUnderneath = context.getImageData(
+      context.canvas.width / 2,
+      context.canvas.height / 2,
+      1,
+      1
+    );
+    if (
+      colorUnderneath.data[0] === BACKGROUND_R &&
+      colorUnderneath.data[1] === BACKGROUND_G &&
+      colorUnderneath.data[2] === BACKGROUND_B
+    ) {
+      return true;
+    }
+  }
+
+  if (bgLoaded === false) {
+    window.setTimeout(bgLoaded, 50);
   }
   // draw beaver on top of map, rotated at desired angle:
   context.save();

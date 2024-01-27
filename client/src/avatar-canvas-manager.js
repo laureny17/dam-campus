@@ -35,24 +35,26 @@ export const drawAvatar = (count, canvasRef) => {
   //     beaverImg = sprites[user.color + "_" + user.accessory];
   //   }
 
-  const colorUnderneath = context.getImageData(
-    context.canvas.width / 2,
-    context.canvas.height / 2,
-    1,
-    1
-  );
-
-  console.log(
-    colorUnderneath.data[0] + ", " + colorUnderneath.data[1] + ", " + colorUnderneath.data[2]
-  );
-
-  if (
-    colorUnderneath.data[0] === 176 &&
-    colorUnderneath.data[1] === 144 &&
-    colorUnderneath.data[2] === 123
-  ) {
-    window.setTimeout(50);
+  function bgLoaded() {
+    let colorUnderneath = context.getImageData(
+      context.canvas.width / 2,
+      context.canvas.height / 2,
+      1,
+      1
+    );
+    if (
+      colorUnderneath.data[0] === 176 &&
+      colorUnderneath.data[1] === 144 &&
+      colorUnderneath.data[2] === 123
+    ) {
+      return true;
+    }
   }
+
+  if (bgLoaded === false) {
+    window.setTimeout(bgLoaded, 50);
+  }
+
   context.drawImage(beaverImg, 0, 0, context.canvas.width, context.canvas.height);
 
   // while (
