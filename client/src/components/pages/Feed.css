@@ -1,0 +1,11 @@
+@import url("https://fonts.googleapis.com/css2?family=Poor+Story&display=swap");
+
+h1 {
+  font-size: 70px;
+  font-family: "Poor Story", system-ui;
+  font-weight: 400;
+  font-style: normal;
+  line-height: 100%;
+  margin-bottom: 2%;
+  text-align: center;
+}

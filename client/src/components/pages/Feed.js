@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { get } from "../../utilities";
 import Card from "../modules/Card.js";
 import { NewStory } from "../modules/NewPostInput.js";
+import "./Feed.css";
 
 const Feed = () => {
   const [stories, setStories] = useState([]);
@@ -34,10 +35,13 @@ const Feed = () => {
     storiesList = <div>No stories!</div>;
   }
   return (
-    <div>
-      <NewStory addNewStory={addNewStory} />
-      {storiesList}
-    </div>
+    <>
+      <h1>Building</h1>
+      <div>
+        <NewStory addNewStory={addNewStory} />
+        {storiesList}
+      </div>
+    </>
   );
 };
 
