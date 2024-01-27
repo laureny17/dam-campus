@@ -62,22 +62,4 @@ const NewStory = (props) => {
   return <NewPostInput defaultText="New Story" onSubmit={addStory} />;
 };
 
-/**
- * New Comment is a New Post component for comments
- *
- * Proptypes
- * @param {string} storyId to add comment to
- */
-const NewComment = (props) => {
-  const addComment = (value) => {
-    const body = { parent: props.storyId, content: value };
-    post("/api/comment", body).then((comment) => {
-      // display this comment on the screen
-      props.addNewComment(comment);
-    });
-  };
-
-  return <NewPostInput defaultText="New Comment" onSubmit={addComment} />;
-};
-
-export { NewComment, NewStory };
+export { NewStory };

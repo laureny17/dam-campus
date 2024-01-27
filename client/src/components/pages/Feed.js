@@ -27,6 +27,7 @@ const Feed = () => {
         _id={storyObj._id}
         creator_name={storyObj.creator_name}
         content={storyObj.content}
+        // votes={storyObj.votes}
       />
     ));
   } else {

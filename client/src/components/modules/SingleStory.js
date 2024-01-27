@@ -13,6 +13,7 @@ import "../modules/Card.css";
 const SingleStory = (props) => {
   return (
     <div className="Card-story">
+      {/* <div className="upvotes-box">{props.upvotes}</div> */}
       <span className="u-bold">{props.creator_name}</span>
       <p className="Card-storyContent">{props.content}</p>
     </div>

@@ -23,11 +23,11 @@
   margin: var(--s) 0 0;
 }
 
-.Card-commentSection {
+/* .Card-commentSection {
   background-color: var(--grey);
   border-top: 1px solid var(--darkgrey);
-}
+} */
 
-.Card-commentBody {
+/* .Card-commentBody {
   margin: 0 0 var(--s);
-}
+} */

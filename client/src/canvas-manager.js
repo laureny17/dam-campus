@@ -42,41 +42,44 @@ Object.keys(walk_2).forEach((key) => {
 const fullMap = new Image(4000, 6000);
 fullMap.src = "../fullMap.png";
 
-// coordinate locations of center of buttons on the full map
-let buttonLocations = {
-  1: [90, 1152],
-  2: [90, 2451],
-  3: [721, 1169],
-  4: [714, 2453],
-  5: [1269, 621],
-  6: [902, 3030],
-  7: [2308, 759],
-  8: [1831, 3018],
-  9: [2656, 745],
-  10: [2085, 1807],
-  11: [2144, 1136],
-  12: [2573, 2669],
-  13: [2460, 1259],
-  14: [247, 3474],
-  16: [2281, 3375],
-  17: [3284, 844],
-  18: [1259, 3740],
-  24: [3006, 2110],
-  26: [3283, 2871],
-  31: [2891, 1314],
-  32: [3481, 3906],
-  33: [3103, 592],
-  34: [3465, 2563],
-  35: [3413, 300],
-  36: [3830, 2825],
-  37: [3512, 1332],
-  38: [3677, 2100],
-  39: [3407, 1918],
-  56: [2297, 4026],
-  57: [2829, 4026],
-  66: [2206, 4778],
-  68: [2858, 5432],
-};
+// const plate = new Image(280, 280);
+// plate.src = "../stuff/plate.png";
+
+// // coordinate locations of center of buttons on the full map
+// let buttonLocations = {
+//   1: [90, 1152],
+//   2: [90, 2451],
+//   3: [721, 1169],
+//   4: [714, 2453],
+//   5: [1269, 621],
+//   6: [902, 3030],
+//   7: [2308, 759],
+//   8: [1831, 3018],
+//   9: [2656, 745],
+//   10: [2085, 1807],
+//   11: [2144, 1136],
+//   12: [2573, 2669],
+//   13: [2460, 1259],
+//   14: [247, 3474],
+//   16: [2281, 3375],
+//   17: [3284, 844],
+//   18: [1259, 3740],
+//   24: [3006, 2110],
+//   26: [3283, 2871],
+//   31: [2891, 1314],
+//   32: [3481, 3906],
+//   33: [3103, 592],
+//   34: [3465, 2563],
+//   35: [3413, 300],
+//   36: [3830, 2825],
+//   37: [3512, 1332],
+//   38: [3677, 2100],
+//   39: [3407, 1918],
+//   56: [2297, 4026],
+//   57: [2829, 4026],
+//   66: [2206, 4778],
+//   68: [2858, 5432],
+// };
 
 ////////////////////////////////////
 /// map setup & window logistics ///
@@ -206,8 +209,8 @@ export const draw = (countFrame, canvasRef) => {
   const pix = context.getImageData(nextX, nextY, 1, 1);
   if (pix.data[0] == BACKGROUND_R && pix.data[1] == BACKGROUND_G && pix.data[2] == BACKGROUND_B) {
     // console.log("wall"); // testing
-    mapPosition.y += beaverDir.y * 3;
-    mapPosition.x += beaverDir.x * 3;
+    mapPosition.y += beaverDir.y * 2;
+    mapPosition.x += beaverDir.x * 2;
   }
   // else, user can move in desired direction
   else {
@@ -226,8 +229,25 @@ export const draw = (countFrame, canvasRef) => {
 
   const currXPos = -4000 + mapPosition.x;
   const currYPos = -6000 + mapPosition.y;
+
   context.clearRect(0, 0, context.canvas.width, context.canvas.height); // erase every time for animation
   context.drawImage(fullMap, currXPos, currYPos);
+
+  // Object.keys(buttonLocations).forEach((key) => {
+  //   // let currButtonXPos = -4000 + (mapPosition.x - 2600 + buttonLocations[key][0]);
+  //   // let currButtonYPos = -6000 + (mapPosition.y - 975 + buttonLocations[key][1]);
+  //   let currButtonXPos = -4000 + buttonLocations[key][0];
+  //   let currButtonYPos = -6000 + buttonLocations[key][1];
+  //   // let currButtonXPos = currXPos + (buttonLocations[key][0] - 50 - 1470);
+  //   // let currButtonYPos = currYPos + (buttonLocations[key][1] - 50 - 800);
+  //   // if (currButtonXPos > )
+  //   context.save();
+  //   context.rect(currButtonXPos, currButtonYPos, 100, 100);
+  //   context.closePath();
+  //   context.clip(); // Sets clipping region for image
+  //   context.drawImage(plate, currButtonXPos, currButtonYPos, 100, 100);
+  //   context.restore();
+  // });
 
   // the beaver
   let beaverImg;
@@ -264,9 +284,9 @@ export const draw = (countFrame, canvasRef) => {
       1
     );
     if (
-      colorUnderneath.data[0] === BACKGROUND_R &&
-      colorUnderneath.data[1] === BACKGROUND_G &&
-      colorUnderneath.data[2] === BACKGROUND_B
+      colorUnderneath.data[0] !== 255 &&
+      colorUnderneath.data[1] !== 255 &&
+      colorUnderneath.data[2] !== 255
     ) {
       return true;
     }
