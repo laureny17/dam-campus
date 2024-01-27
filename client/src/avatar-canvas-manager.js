@@ -21,6 +21,7 @@ export const drawAvatar = (count, canvasRef) => {
   if (!canvas) {
     return;
   }
+  const context = canvas.getContext("2d");
 
   //   const [user, setUser] = useState();
 
@@ -34,7 +35,23 @@ export const drawAvatar = (count, canvasRef) => {
   //     beaverImg = sprites[user.color + "_" + user.accessory];
   //   }
 
-  console.log("hello");
-  const context = canvas.getContext("2d");
+  const colorUnderneath = context.getImageData(
+    context.canvas.width / 2,
+    context.canvas.height / 2,
+    1,
+    1
+  );
+
+  console.log(
+    colorUnderneath.data[0] + ", " + colorUnderneath.data[1] + ", " + colorUnderneath.data[2]
+  );
+
+  while (
+    colorUnderneath.data[0] === 176 &&
+    colorUnderneath.data[1] === 144 &&
+    colorUnderneath.data[2] === 123
+  ) {
+    context.drawImage(beaverImg, 0, 0, context.canvas.width, context.canvas.height);
+  }
   context.drawImage(beaverImg, 0, 0, context.canvas.width, context.canvas.height);
 };
