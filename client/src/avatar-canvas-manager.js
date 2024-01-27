@@ -46,12 +46,21 @@ export const drawAvatar = (count, canvasRef) => {
     colorUnderneath.data[0] + ", " + colorUnderneath.data[1] + ", " + colorUnderneath.data[2]
   );
 
-  while (
+  if (
     colorUnderneath.data[0] === 176 &&
     colorUnderneath.data[1] === 144 &&
     colorUnderneath.data[2] === 123
   ) {
-    context.drawImage(beaverImg, 0, 0, context.canvas.width, context.canvas.height);
+    window.setTimeout(50);
   }
   context.drawImage(beaverImg, 0, 0, context.canvas.width, context.canvas.height);
+
+  // while (
+  //   colorUnderneath.data[0] === 176 &&
+  //   colorUnderneath.data[1] === 144 &&
+  //   colorUnderneath.data[2] === 123
+  // ) {
+  //   context.drawImage(beaverImg, 0, 0, context.canvas.width, context.canvas.height);
+  // }
+  // context.drawImage(beaverImg, 0, 0, context.canvas.width, context.canvas.height);
 };

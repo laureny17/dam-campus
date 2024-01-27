@@ -42,7 +42,7 @@ const Home = ({ userId, handleLogin, handleLogout }) => {
         <section className="section color-light">
           <div className="Tutorial-container">
             <h1>How to Play</h1>
-            <body>yoink</body>
+            <body>to do</body>
           </div>
         </section>
       </section>

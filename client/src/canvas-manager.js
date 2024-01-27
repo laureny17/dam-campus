@@ -4,6 +4,10 @@ const BACKGROUND_R = 215;
 const BACKGROUND_G = 185;
 const BACKGROUND_B = 165;
 
+////////////////////////////////////
+///            images            ///
+////////////////////////////////////
+
 let walk_1 = {
   cool_blank: null,
   cool_bow: null,
@@ -38,6 +42,46 @@ Object.keys(walk_2).forEach((key) => {
 const fullMap = new Image(4000, 6000);
 fullMap.src = "../fullMap.png";
 
+// coordinate locations of center of buttons on the full map
+let buttonLocations = {
+  1: [90, 1152],
+  2: [90, 2451],
+  3: [721, 1169],
+  4: [714, 2453],
+  5: [1269, 621],
+  6: [902, 3030],
+  7: [2308, 759],
+  8: [1831, 3018],
+  9: [2656, 745],
+  10: [2085, 1807],
+  11: [2144, 1136],
+  12: [2573, 2669],
+  13: [2460, 1259],
+  14: [247, 3474],
+  16: [2281, 3375],
+  17: [3284, 844],
+  18: [1259, 3740],
+  24: [3006, 2110],
+  26: [3283, 2871],
+  31: [2891, 1314],
+  32: [3481, 3906],
+  33: [3103, 592],
+  34: [3465, 2563],
+  35: [3413, 300],
+  36: [3830, 2825],
+  37: [3512, 1332],
+  38: [3677, 2100],
+  39: [3407, 1918],
+  56: [2297, 4026],
+  57: [2829, 4026],
+  66: [2206, 4778],
+  68: [2858, 5432],
+};
+
+////////////////////////////////////
+/// map setup & window logistics ///
+////////////////////////////////////
+
 // initial position of map (positive x left, positive y up)
 // = initial position of beaver... with (0, 0) was bottom right and (4000, 6000) as top left
 let mapPosition = { x: 2600, y: 975 };
@@ -69,6 +113,10 @@ window.addEventListener("resize", () => {
   mapPosition.x += changeInWidth / 2;
   mapPosition.y += changeInHeight / 2;
 });
+
+////////////////////////////////////
+///        player movement       ///
+////////////////////////////////////
 
 // why is there a long delay in switching to frames upon pressing a new key(s)?
 // ex: do a continual zigzag -> the frame won't switch at all :()
@@ -135,7 +183,11 @@ const getBeaverAngle = () => {
   return angle;
 };
 
-// draw!
+////////////////////////////////////
+////////////////////////////////////
+///             draw             ///
+////////////////////////////////////
+////////////////////////////////////
 
 export const draw = (countFrame, canvasRef) => {
   canvas = canvasRef.current;
@@ -196,30 +248,31 @@ export const draw = (countFrame, canvasRef) => {
     1,
     1
   );
-  // if color underneath is not white, it means the map hasn't loaded in yet
+  // if color underneath is beige, it means the map hasn't loaded in yet
   if (
-    colorUnderneath.data[0] === 255 &&
-    colorUnderneath.data[1] === 255 &&
-    colorUnderneath.data[2] === 255
+    colorUnderneath.data[0] === BACKGROUND_R &&
+    colorUnderneath.data[1] === BACKGROUND_G &&
+    colorUnderneath.data[2] === BACKGROUND_B
   ) {
-    // draw beaver on top of map piece, rotated at desired angle:
-    context.save();
-    context.translate(canvas.width / 2, canvas.height / 2);
-    context.rotate(angle);
-    context.drawImage(
-      beaverImg,
-      148, // left cut
-      22, // top cut
-      200, // width of cut
-      456, // height of cut
-      // place beaver in center of screen?
-      -25,
-      -57,
-      50,
-      114
-    );
-    context.rotate(-angle);
-    context.translate(canvas.width / 2, canvas.height / 2);
-    context.restore();
+    window.setTimeout(50);
   }
+  // draw beaver on top of map piece, rotated at desired angle:
+  context.save();
+  context.translate(canvas.width / 2, canvas.height / 2);
+  context.rotate(angle);
+  context.drawImage(
+    beaverImg,
+    148, // left cut
+    22, // top cut
+    200, // width of cut
+    456, // height of cut
+    // place beaver in center of screen?
+    -25,
+    -57,
+    50,
+    114
+  );
+  context.rotate(-angle);
+  context.translate(canvas.width / 2, canvas.height / 2);
+  context.restore();
 };

@@ -59,7 +59,6 @@ body {
 }
 
 .avatar_canvas {
-  /* background-color: pink; */
   width: 25vw;
   height: 25vw;
   /* margin-block: 1.5%; */
@@ -73,12 +72,21 @@ body {
   -webkit-transform: translateZ(0); */
 }
 
-/* .description{
-  margin-top:
-} */
-
-.enter-map-button {
-  width: 10vw;
-  height: 3vw;
-  margin-top: -10vw;
+.description {
+  font-weight: 300;
 }
+
+button {
+  width: fit-content;
+  padding-left: 1.5vw;
+  padding-right: 1.5vw;
+  padding-top: 1vh;
+  padding-bottom: 1vh;
+  font-family: "Courier New", monospace;
+  font-weight: 200;
+}
+
+/* button {
+  font-family: "Courier New", monospace;
+  font-weight: 200;
+} */
