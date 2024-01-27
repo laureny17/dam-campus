@@ -293,6 +293,7 @@ export const draw = (countFrame, canvasRef) => {
   }
 
   if (bgLoaded === false) {
+    context.drawImage(fullMap, currXPos, currYPos);
     window.setTimeout(bgLoaded, 50);
   }
   // draw beaver on top of map, rotated at desired angle:
