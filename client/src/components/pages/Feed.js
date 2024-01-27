@@ -7,6 +7,13 @@ import "./Feed.css";
 const Feed = () => {
   const [stories, setStories] = useState([]);
 
+  // useEffect(() => {
+  //   get("/api/stories").then((storyObjs) => {
+  //     setStories(storyObjs);
+  //   });
+  // }, []);
+
+  // tried to change this so that it only shows us stories from a certain building number...
   useEffect(() => {
     get("/api/stories").then((storyObjs) => {
       setStories(storyObjs);

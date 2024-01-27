@@ -50,9 +50,18 @@ const NewPostInput = (props) => {
 /**
  * New Story is a New Post component for stories
  */
+// const NewStory = (props) => {
+//   const addStory = (value) => {
+//     const body = { content: value };
+//     post("/api/story", body).then((story) => {
+//       // display this story on the screen
+//       props.addNewStory(story);
+//     });
+//   };
+
 const NewStory = (props) => {
   const addStory = (value) => {
-    const body = { content: value };
+    const body = { content: value, building_number: props.building_number };
     post("/api/story", body).then((story) => {
       // display this story on the screen
       props.addNewStory(story);
