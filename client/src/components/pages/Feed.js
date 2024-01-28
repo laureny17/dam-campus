@@ -7,12 +7,6 @@ import "./Feed.css";
 const Feed = () => {
   const [stories, setStories] = useState([]);
 
-  // useEffect(() => {
-  //   get("/api/stories").then((storyObjs) => {
-  //     setStories(storyObjs);
-  //   });
-  // }, []);
-
   // tried to change this so that it only shows us stories from a certain building number...
   useEffect(() => {
     get("/api/stories").then((storyObjs) => {
@@ -35,6 +29,7 @@ const Feed = () => {
         _id={storyObj._id}
         creator_name={storyObj.creator_name}
         content={storyObj.content}
+        building_number={storyObj.building_number} // this is for the display.. i think. go to Card.js
         // votes={storyObj.votes}
       />
     ));

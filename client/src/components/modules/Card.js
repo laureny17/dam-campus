@@ -13,26 +13,13 @@ import "./Card.css";
  * @param {string} content of the story
  */
 const Card = (props) => {
-  // const [comments, setComments] = useState([]);
-
-  // useEffect(() => {
-  //   get("/api/comment", { parent: props._id }).then((commentObjs) => {
-  //     setComments(commentObjs);
-  //   });
-  // }, []);
-
-  // // this gets called when the user pushes "Submit", so their
-  // // post gets added to the screen right away
-  // const addNewComment = (commentObj) => {
-  //   setComments(comments.concat([commentObj]));
-  // };
-
   return (
     <div className="Card-container">
       <SingleStory
         _id={props._id}
         creator_name={props.creator_name}
         content={props.content}
+        building_number={props.building_number} // for the display, see singlestory.js
         // votes={props.votes}
       />
     </div>

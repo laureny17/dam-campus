@@ -34,10 +34,10 @@ router.post("/story", auth.ensureLoggedIn, (req, res) => {
     creator_id: req.user._id,
     creator_name: req.user.name,
     content: req.body.content,
-    building_number: req.body.content, // huh???
+    building_number: req.user.currBuilding, // um???
+    // building_number: req.body.building_number, // this isn't working... does work if i manually type in a number
     // votes: req.body.upvotes,
   });
-
   newStory.save().then((story) => res.send(story));
 });
 

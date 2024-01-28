@@ -2,27 +2,38 @@
 .NewPostInput-button {
   font-family: "Open Sans";
   font-size: 14px;
-  padding: var(--s) var(--m);
+  margin-top: 2vh;
 }
 
 .NewPostInput-input {
+  height: 5vh;
   flex-grow: 1;
+  text-wrap: pretty;
+  min-height: 5vh;
+  max-height: 50vh;
+  resize: vertical;
   border: var(--darkgrey) 1px solid;
   border-radius: var(--xs) 0 0 var(--xs);
   transition: box-shadow 0.1s;
+  padding: var(--s) var(--m);
+  margin-left: 20vw;
 }
 
 .NewPostInput-input:focus-within {
   border-color: var(--primary--dim);
-  box-shadow: 0 0 0 var(--xs) rgba(0, 123, 255, 0.25);
+  box-shadow: 0 0 0 var(--xs) var(--primary--dim);
 }
 
 .NewPostInput-button {
+  width: 10vw;
+  text-align: center;
   color: var(--primary);
   border: var(--primary) 1px solid;
   border-radius: 0 var(--xs) var(--xs) 0;
   background: none;
   transition: color 0.1s, background 0.1s;
+  padding: 0 0;
+  margin-right: 20vw;
 }
 
 .NewPostInput-button:hover {

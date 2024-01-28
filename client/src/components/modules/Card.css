@@ -2,6 +2,8 @@
   border: var(--darkgrey) 1px solid;
   border-radius: var(--xs);
   margin-top: var(--m);
+  margin-left: 20vw;
+  margin-right: 20vw;
 }
 
 .Card-container:first-of-type {
@@ -19,7 +21,7 @@
 }
 
 .Card-storyContent {
-  font-size: 40px;
+  font-size: 20px;
   margin: var(--s) 0 0;
 }
 

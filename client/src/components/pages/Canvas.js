@@ -2,7 +2,6 @@ import "./Canvas.css";
 import React, { useState, useEffect, useRef } from "react";
 import { draw } from "../../canvas-manager";
 // import { Routes, Route } from "react-router-dom";
-// import { resources, drawCanvas } from "../../canvas-manager";
 // import { handleInput } from "../../input";
 
 const Canvas = (props) => {
