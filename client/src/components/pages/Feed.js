@@ -1,14 +1,21 @@
 import React, { useState, useEffect } from "react";
-import { get } from "../../utilities";
+import { get, post } from "../../utilities";
 import Card from "../modules/Card.js";
 import { NewStory } from "../modules/NewPostInput.js";
 import "./Feed.css";
+import { getBuilding } from "../../canvas-manager";
 
 // import { GoogleOAuthProvider, GoogleLogin, googleLogout } from "@react-oauth/google";
 // const GOOGLE_CLIENT_ID = "644652111219-c770r1ssmkcpnnp5saugn1dj1cmct07v.apps.googleusercontent.com";
 // // need { userId, handleLogin, handleLogout } inside Feed = () if want login button
 
 const Feed = () => {
+  // let currUserId;
+  // get("/api/whoami").then((user) => {
+  //   currUserId = user._id;
+  // });
+  // post("/api/updateUserBuilding", { id: currUserId, currBuilding: getBuilding }).then((user) => {});
+
   const [stories, setStories] = useState([]);
 
   // tried to change this so that it only shows us stories from a certain building number...

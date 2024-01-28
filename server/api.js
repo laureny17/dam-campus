@@ -20,13 +20,12 @@ const auth = require("./auth");
 const router = express.Router();
 
 // router.get("/stories", (req, res) => {
-//   // empty selector means get all documents
 //   Story.find({ building_number: 1 }).then((stories) => res.send(stories));
 // });
 
 router.get("/stories", (req, res) => {
-  // get all stories w/ building number from request?
   Story.find({ building_number: req.query.building_number }).then((stories) => res.send(stories));
+  // Story.find({ building_number: req.user.currBuilding }).then((stories) => res.send(stories));
 });
 
 router.post("/story", auth.ensureLoggedIn, (req, res) => {
@@ -34,9 +33,9 @@ router.post("/story", auth.ensureLoggedIn, (req, res) => {
     creator_id: req.user._id,
     creator_name: req.user.name,
     content: req.body.content,
-    building_number: req.user.currBuilding, // um???
-    // building_number: req.body.building_number, // this isn't working... does work if i manually type in a number
-    // votes: req.body.upvotes,
+    building_number: req.user.currBuilding,
+    // building_number: req.body.building_number, // works if manually type in a number
+    // votes: req.body.upvotes, // do if there is time
   });
   newStory.save().then((story) => res.send(story));
 });
@@ -77,5 +76,13 @@ router.all("*", (req, res) => {
   console.log(`API route not found: ${req.method} ${req.url}`);
   res.status(404).send({ msg: "API route not found" });
 });
+
+// router.post("/api/updateUserBuilding", (req, res) => {
+//   User.findOne({ id: req.body.id }).then((user) => {
+//     user.currBuilding = req.body.currBuilding; // ?
+//     user.save();
+//     res.send(user);
+//   });
+// });
 
 module.exports = router;

@@ -54,10 +54,6 @@ const NewPostInput = (props) => {
   );
 };
 
-/**
- * New Story is a New Post component for stories
- */
-
 const NewStory = (props) => {
   const addStory = (value) => {
     const body = { content: value, building_number: props.building_number };
