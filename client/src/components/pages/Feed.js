@@ -34,7 +34,7 @@ const Feed = () => {
       />
     ));
   } else {
-    storiesList = <div>No stories!</div>;
+    storiesList = <div className="no-posts">No posts here yet :( be the first?</div>;
   }
   return (
     <>
