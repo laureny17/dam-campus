@@ -4,6 +4,10 @@ const BACKGROUND_R = 215;
 const BACKGROUND_G = 185;
 const BACKGROUND_B = 165;
 
+const MITRED_R = 117;
+const MITRED_G = 0;
+const MITRED_B = 20;
+
 ////////////////////////////////////
 ///            images            ///
 ////////////////////////////////////
@@ -199,6 +203,10 @@ export const draw = (countFrame, canvasRef) => {
   }
   const context = canvas.getContext("2d", { willReadFrequently: true });
 
+  ////////////////////////////////////
+  ///      movement mechanics      ///
+  ////////////////////////////////////
+
   const beaverDir = getInputDirection();
 
   // first, check if the beaver can move in that input dir
@@ -226,6 +234,10 @@ export const draw = (countFrame, canvasRef) => {
       mapPosition.x -= beaverDir.x * 2;
     }
   }
+
+  ////////////////////////////////////
+  ///  draw background and plates  ///
+  ////////////////////////////////////
 
   const currXPos = -4000 + mapPosition.x;
   const currYPos = -6000 + mapPosition.y;
@@ -258,12 +270,6 @@ export const draw = (countFrame, canvasRef) => {
   let currButtonYPos;
 
   Object.keys(buttonLocations).forEach((key) => {
-    // let currButtonXPos = -4000 + (mapPosition.x - 2600 + buttonLocations[key][0]);
-    // let currButtonYPos = -6000 + (mapPosition.y - 975 + buttonLocations[key][1]);
-    // // currButtonXPos =  (buttonLocations[key][0] + 50);
-    // // currButtonYPos =  (buttonLocations[key][1] + 50);
-    // // console.log("x: " + currButtonXPos);
-    // // console.log("y: " + currButtonYPos);
     if (
       buttonLocations[key][0] <= mapPosition.x + 25 &&
       buttonLocations[key][0] >= mapPosition.x - context.canvas.width - 25 &&
@@ -272,19 +278,19 @@ export const draw = (countFrame, canvasRef) => {
     ) {
       currButtonXPos = mapPosition.x - buttonLocations[key][0];
       currButtonYPos = mapPosition.y - buttonLocations[key][1];
-      // context.save;
-      // context.fillStyle = "black";
-      // context.fillRect(currButtonXPos, currButtonYPos, 100, 100);
-      context.rect(currButtonXPos - 25, currButtonYPos - 25, 50, 50);
-      // context.closePath();
-      // context.clip(); // Sets clipping region for image
-      context.drawImage(plate, currButtonXPos - 25, currButtonYPos - 25, 50, 50);
-      // context.restore();
-      console.log(key);
+      context.fillStyle = "#750014";
+      context.fillRect(currButtonXPos - 25, currButtonYPos - 25, 50, 50);
+      // below: drawing the handrawn plates
+      // context.rect(currButtonXPos - 25, currButtonYPos - 25, 50, 50);
+      // context.drawImage(plate, currButtonXPos - 25, currButtonYPos - 25, 50, 50);
+      // console.log(key);
     }
   });
 
-  // the beaver
+  ////////////////////////////////////
+  ///        draw the beaver       ///
+  ////////////////////////////////////
+
   let beaverImg;
   // walk frame 1
   if (walkFrame === 1) {
@@ -332,5 +338,39 @@ export const draw = (countFrame, canvasRef) => {
   context.rotate(-angle);
   context.translate(canvas.width / 2, canvas.height / 2);
   context.restore();
-  console.log("beaver");
+  // console.log("beaver drawn");
+
+  ////////////////////////////////////
+  ///        on clicked color      ///
+  ////////////////////////////////////
+
+  window.addEventListener("click", (event) => {
+    let rect = canvas.getBoundingClientRect();
+    let xcoord = event.clientX - rect.left;
+    let ycoord = event.clientY - rect.top;
+    let pixel = context.getImageData(xcoord, ycoord, 1, 1);
+    // console.log(xcoord + ", " + ycoord); // for testing
+    // console.log(pixel.data[0] + ", " + pixel.data[1] + ", " + pixel.data[2]); // for testing
+    if (pixel.data[0] === MITRED_R && pixel.data[1] === MITRED_G && pixel.data[2] === MITRED_B) {
+      console.log("REDDDDD");
+      let clickedX = mapPosition.x - xcoord;
+      let clickedY = mapPosition.y - ycoord;
+      // console.log(clickedX + ", " + clickedY);
+      let buildingClicked;
+      for (var key in buttonLocations) {
+        if (
+          clickedX <= buttonLocations[key][0] + 25 &&
+          clickedX >= buttonLocations[key][0] - 25 &&
+          clickedY <= buttonLocations[key][1] + 25 &&
+          clickedY >= buttonLocations[key][1] - 25
+        ) {
+          buildingClicked = key;
+          break;
+        }
+      }
+      console.log(buildingClicked);
+      // open in same tab:
+      window.location.replace("/feed");
+    }
+  });
 };
