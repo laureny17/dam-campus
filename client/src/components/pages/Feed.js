@@ -4,10 +4,11 @@ import Card from "../modules/Card.js";
 import { NewStory } from "../modules/NewPostInput.js";
 import "./Feed.css";
 
-import { GoogleOAuthProvider, GoogleLogin, googleLogout } from "@react-oauth/google";
-const GOOGLE_CLIENT_ID = "644652111219-c770r1ssmkcpnnp5saugn1dj1cmct07v.apps.googleusercontent.com";
+// import { GoogleOAuthProvider, GoogleLogin, googleLogout } from "@react-oauth/google";
+// const GOOGLE_CLIENT_ID = "644652111219-c770r1ssmkcpnnp5saugn1dj1cmct07v.apps.googleusercontent.com";
+// // need { userId, handleLogin, handleLogout } inside Feed = () if want login button
 
-const Feed = ({ userId, handleLogin, handleLogout }) => {
+const Feed = () => {
   const [stories, setStories] = useState([]);
 
   // tried to change this so that it only shows us stories from a certain building number...
@@ -41,7 +42,7 @@ const Feed = ({ userId, handleLogin, handleLogout }) => {
   }
   return (
     <>
-      <div className="Button-container">
+      {/* <div className="feed-button">
         <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
           {userId ? (
             <button
@@ -56,7 +57,7 @@ const Feed = ({ userId, handleLogin, handleLogout }) => {
             <GoogleLogin onSuccess={handleLogin} onError={(err) => console.log(err)} />
           )}
         </GoogleOAuthProvider>
-      </div>
+      </div> */}
       <h1>Building</h1>
       <div>
         <NewStory addNewStory={addNewStory} />

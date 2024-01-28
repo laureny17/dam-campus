@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { GoogleOAuthProvider, GoogleLogin, googleLogout } from "@react-oauth/google";
 import AvatarCanvas from "./AvatarCanvas";
+import { get } from "../../utilities";
 
 import "../../utilities.css";
 import "./Home.css";
@@ -8,6 +9,16 @@ import "./Home.css";
 const GOOGLE_CLIENT_ID = "644652111219-c770r1ssmkcpnnp5saugn1dj1cmct07v.apps.googleusercontent.com";
 
 const Home = ({ userId, handleLogin, handleLogout }) => {
+  const handleMapClick = (event) => {
+    get("/api/whoami").then((user) => {
+      if (user._id) {
+        window.location.replace("/map");
+      } else {
+        return window.alert("Please sign in to enter the map!");
+      }
+    });
+  };
+
   return (
     <>
       <div className="Button-container">
@@ -33,9 +44,11 @@ const Home = ({ userId, handleLogin, handleLogout }) => {
             <body className="description">Your explorer:</body>
             <AvatarCanvas />
             <center>
-              <a href="/map">
-                <button className="enter-map-button">Enter the map!</button>
-              </a>
+              {/* <a href="/map"> */}
+              <button className="enter-map-button" onClick={handleMapClick}>
+                Enter the map!
+              </button>
+              {/* </a> */}
             </center>
           </div>
         </section>

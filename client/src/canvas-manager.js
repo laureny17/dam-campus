@@ -190,6 +190,8 @@ const getBeaverAngle = () => {
   return angle;
 };
 
+let buildingClicked;
+
 ////////////////////////////////////
 ////////////////////////////////////
 ///             draw             ///
@@ -356,7 +358,7 @@ export const draw = (countFrame, canvasRef) => {
       let clickedX = mapPosition.x - xcoord;
       let clickedY = mapPosition.y - ycoord;
       // console.log(clickedX + ", " + clickedY);
-      let buildingClicked;
+      // let buildingClicked;
       for (var key in buttonLocations) {
         if (
           clickedX <= buttonLocations[key][0] + 25 &&
@@ -373,4 +375,8 @@ export const draw = (countFrame, canvasRef) => {
       window.location.replace("/feed");
     }
   });
+};
+
+export const getBuilding = () => {
+  return buildingClicked;
 };
