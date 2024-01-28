@@ -34,8 +34,13 @@ const NewPostInput = (props) => {
 
   return (
     <div className="u-flex">
-      <textarea className="NewPostInput-input">
-        <input type="text" placeholder={props.defaultText} value={value} onChange={handleChange} />
+      <textarea
+        className="NewPostInput-input"
+        placeholder={props.defaultText}
+        value={value}
+        onChange={handleChange}
+      >
+        <input type="text" />
       </textarea>
       <button
         type="submit"
