@@ -10,8 +10,7 @@
   margin-top: var(--l);
 }
 
-.Card-story,
-.Card-commentSection {
+.Card-story {
   padding: var(--m) var(--l);
 }
 
@@ -21,8 +20,13 @@
 }
 
 .Card-storyContent {
-  font-size: 20px;
+  font-size: 15px;
   margin: var(--s) 0 0;
+  line-height: 175%;
+}
+
+.u-bold {
+  font-size: 20px;
 }
 
 /* .Card-commentSection {

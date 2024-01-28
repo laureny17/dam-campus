@@ -67,7 +67,7 @@ const NewStory = (props) => {
     });
   };
 
-  return <NewPostInput defaultText="New Story" onSubmit={addStory} />;
+  return <NewPostInput defaultText="Write a Post..." onSubmit={addStory} />;
 };
 
 export { NewStory };
