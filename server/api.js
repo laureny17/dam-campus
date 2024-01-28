@@ -19,9 +19,14 @@ const auth = require("./auth");
 // api endpoints: all these paths will be prefixed with "/api/"
 const router = express.Router();
 
+// router.get("/stories", (req, res) => {
+//   // empty selector means get all documents
+//   Story.find({ building_number: 1 }).then((stories) => res.send(stories));
+// });
+
 router.get("/stories", (req, res) => {
-  // empty selector means get all documents
-  Story.find({}).then((stories) => res.send(stories));
+  // get all stories w/ building number from request?
+  Story.find({ building_number: req.query.building_number }).then((stories) => res.send(stories));
 });
 
 router.post("/story", auth.ensureLoggedIn, (req, res) => {
@@ -29,9 +34,10 @@ router.post("/story", auth.ensureLoggedIn, (req, res) => {
     creator_id: req.user._id,
     creator_name: req.user.name,
     content: req.body.content,
+    building_number: req.user.currBuilding, // um???
+    // building_number: req.body.building_number, // this isn't working... does work if i manually type in a number
     // votes: req.body.upvotes,
   });
-
   newStory.save().then((story) => res.send(story));
 });
 

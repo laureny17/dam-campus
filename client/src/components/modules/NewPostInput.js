@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { post } from "../../utilities";
+import { get, post } from "../../utilities";
 
 import "./NewPostInput.css";
 
@@ -21,20 +21,22 @@ const NewPostInput = (props) => {
 
   // called when the user hits "Submit" for a new post
   const handleSubmit = (event) => {
-    event.preventDefault();
-    props.onSubmit && props.onSubmit(value);
-    setValue("");
+    get("/api/whoami").then((user) => {
+      if (user._id) {
+        event.preventDefault();
+        props.onSubmit && props.onSubmit(value);
+        setValue("");
+      } else {
+        window.alert("Please sign in to post!");
+      }
+    });
   };
 
   return (
     <div className="u-flex">
-      <input
-        type="text"
-        placeholder={props.defaultText}
-        value={value}
-        onChange={handleChange}
-        className="NewPostInput-input"
-      />
+      <textarea className="NewPostInput-input">
+        <input type="text" placeholder={props.defaultText} value={value} onChange={handleChange} />
+      </textarea>
       <button
         type="submit"
         className="NewPostInput-button u-pointer"
@@ -50,9 +52,10 @@ const NewPostInput = (props) => {
 /**
  * New Story is a New Post component for stories
  */
+
 const NewStory = (props) => {
   const addStory = (value) => {
-    const body = { content: value };
+    const body = { content: value, building_number: props.building_number };
     post("/api/story", body).then((story) => {
       // display this story on the screen
       props.addNewStory(story);
