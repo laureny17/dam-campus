@@ -11,6 +11,13 @@ h1 {
 }
 
 .no-posts {
+  margin-top: 5vh;
   margin-left: 20vw;
   margin-right: 20vw;
+}
+
+.Button-container {
+  bottom: 0;
+  left: 0;
+  background-color: #ffffff;
 }
