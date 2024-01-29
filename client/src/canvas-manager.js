@@ -94,33 +94,34 @@ let buttonLocations = {
 
 let xPos = 2600;
 let yPos = 975;
+let mapPosition = { x: xPos, y: yPos };
 
-// const getCoords = () => {
-//   const [currX, setCurrX] = useState([]);
-//   const [currY, setCurrY] = useState([]);
-//   get("/api/whoami").then((user) => {
-//     if (user._id) {
-//       // they are registered in the database, and currently logged in.
-//       console.log(user);
-//       get("/api/get_position", { userid: user._id }).then((pos) => {
-//         console.log(pos);
-//         setCurrX(pos[0]);
-//         setCurrY(pos[1]);
-//       });
-//     } else {
-//       setCurrX(2600);
-//       setCurrX(975);
-//     }
-//   });
-//   return [currX, currY];
-// };
+const getCoords = async () => {
+  let coordinates = [2600, 975];
+  const user = await fetch("/api/whoami").then((response) => response.json());
+  if (user._id) {
+    const pos = await fetch("/api/get_position", { userid: user._id }).then((response) =>
+      response.json()
+    );
+    coordinates = pos;
+  }
+  return coordinates;
+};
 
-// console.log(getCoords());
-// console.log(xPos + " " + yPos);
+const updateCoordinates = async () => {
+  const coordinates = await getCoords();
+  console.log("Coordinates:", coordinates);
+  xPos = coordinates[0];
+  yPos = coordinates[1];
+  mapPosition.x = xPos;
+  mapPosition.y = yPos;
+};
+
+updateCoordinates();
 
 // initial position of map (positive x left, positive y up)
 // = initial position of beaver... with (0, 0) was bottom right and (4000, 6000) as top left
-let mapPosition = { x: xPos, y: yPos };
+// let mapPosition = { x: xPos, y: yPos };
 let inputDirection = { x: 0, y: 0 }; // nothing should be moving when user first enters the game
 let angle = 0; // intial angle beaver is pointing to
 let count = 1; // count for setting up walkFrame
@@ -376,9 +377,11 @@ export const draw = (countFrame, canvasRef) => {
   ////////////////////////////////////
 
   window.addEventListener("click", (event) => {
-    let rect = canvas.getBoundingClientRect();
-    let xcoord = event.clientX - rect.left;
-    let ycoord = event.clientY - rect.top;
+    // let rect = canvas.getBoundingClientRect();
+    // let xcoord = event.clientX - rect.left;
+    // let ycoord = event.clientY - rect.top;
+    let xcoord = event.clientX;
+    let ycoord = event.clientY;
     let pixel = context.getImageData(xcoord, ycoord, 1, 1);
     // console.log(xcoord + ", " + ycoord); // for testing
     // console.log(pixel.data[0] + ", " + pixel.data[1] + ", " + pixel.data[2]); // for testing
@@ -399,6 +402,11 @@ export const draw = (countFrame, canvasRef) => {
         }
       }
       console.log(buildingClicked);
+      get("/api/whoami").then((user) => {
+        if (user._id) {
+          post("/api/update_position", { userid: user._id, x: mapPosition.x, y: mapPosition.y });
+        }
+      });
       // Redirect to the /feed page with buildingClicked as a query parameter
       window.location.href = `/feed/${buildingClicked}`;
     }

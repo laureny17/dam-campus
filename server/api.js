@@ -72,13 +72,13 @@ router.post("/initsocket", (req, res) => {
 // | write your API methods below!|
 // |------------------------------|
 
-router.get("/update_position", (req, res) => {
-  User.findById(req.query.userid).then((user) => {
-    user.x_position = req.body.x; // or req.query...?
-    user.y_position = req.body.y;
-    user.save();
-    res.send(user);
-  });
+router.post("/update_position", async (req, res) => {
+  const user = await User.findById(req.body.userid);
+  user.x_position = req.body.x;
+  user.y_position = req.body.y;
+  await user.save();
+  // Send the updated user data in the response
+  res.send(user);
 });
 
 router.get("/get_position", (req, res) => {
