@@ -29,7 +29,8 @@ export const drawAvatar = (count, canvasRef) => {
   //     get(`/api/user`, { userid: props.userId }).then((userObj) => setUser(userObj));
   //   }, []);
 
-  let beaverImg = sprites["cool_blank"];
+  let beaverImg = new Image(1000, 1000);
+  beaverImg.src = sprites["cool_blank"].src;
 
   //   if (user) {
   //     beaverImg = sprites[user.color + "_" + user.accessory];
@@ -55,7 +56,9 @@ export const drawAvatar = (count, canvasRef) => {
     window.setTimeout(bgLoaded, 50);
   }
 
-  context.drawImage(beaverImg, 0, 0, context.canvas.width, context.canvas.height);
+  beaverImg.onload = function () {
+    context.drawImage(beaverImg, 0, 0, context.canvas.width, context.canvas.height);
+  };
 
   // while (
   //   colorUnderneath.data[0] === 176 &&

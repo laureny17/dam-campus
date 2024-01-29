@@ -72,6 +72,8 @@ router.post("/initsocket", (req, res) => {
 // | write your API methods below!|
 // |------------------------------|
 
+//////// user current position ////////
+
 router.post("/update_position", async (req, res) => {
   const user = await User.findById(req.body.userid);
   user.x_position = req.body.x;
@@ -83,9 +85,30 @@ router.post("/update_position", async (req, res) => {
 
 router.get("/get_position", (req, res) => {
   User.findById(req.query.userid).then((user) => {
-    const x = req.user.x_position;
-    const y = req.user.y_position;
+    let x = req.user.x_position;
+    let y = req.user.y_position;
     res.send([x, y]);
+  });
+});
+
+//////// avatar customization ////////
+
+// {userid: user._id, color: color, accessory: accessory}
+router.post("/update_avatar", async (req, res) => {
+  const user = await User.findById(req.body.userid);
+  user.color = req.body.color;
+  user.accessory = req.body.accessory;
+  await user.save();
+  // Send the updated user data in the response
+  res.send(user);
+});
+
+// {userid: user._id}
+router.get("/get_avatar_type", (req, res) => {
+  User.findById(req.query.userid).then((user) => {
+    let color = req.user.color;
+    let accessory = req.user.accessory;
+    res.send([color, accessory]);
   });
 });
 

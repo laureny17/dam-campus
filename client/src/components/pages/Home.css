@@ -9,6 +9,10 @@ h1 {
   margin-bottom: 2%;
 }
 
+.first-page {
+  margin-top: 2%;
+}
+
 h3 {
   font-size: 40px;
   font-family: "Poor Story", system-ui;
@@ -50,8 +54,8 @@ body {
 
 .section {
   height: 100vh;
-  align-items: center;
-  justify-content: center;
+  /* align-items: center;
+  justify-content: center; */
 }
 
 .color-dark {
@@ -86,7 +90,9 @@ button {
   font-weight: 200;
 }
 
-/* button {
-  font-family: "Courier New", monospace;
-  font-weight: 200;
-} */
+.arrowDown {
+  font-size: 75px;
+  padding-right: 10vw;
+  margin-right: -95vw;
+  margin-top: -3%;
+}

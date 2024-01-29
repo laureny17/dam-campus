@@ -40,7 +40,7 @@ const Home = ({ userId, handleLogin, handleLogout }) => {
       <section className="main">
         <section className="section color-dark">
           <div className="Title-container">
-            <h1>Welcome to the Dam Campus.</h1>
+            <h1 className="first-page">Welcome to the Dam Campus.</h1>
             <body className="description">Your explorer:</body>
             <AvatarCanvas />
             <center>
@@ -50,6 +50,7 @@ const Home = ({ userId, handleLogin, handleLogout }) => {
               </button>
               {/* </a> */}
             </center>
+            <div className="arrowDown">&#8623;</div>
           </div>
         </section>
         <section className="section color-light">
