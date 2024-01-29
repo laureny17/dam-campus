@@ -1,20 +1,5 @@
-import {
-  fullMap,
-  plate,
-  walk_1,
-  walk_2,
-  buttonLocations,
-  BACKGROUND_R,
-  BACKGROUND_G,
-  BACKGROUND_B,
-  MITRED_R,
-  MITRED_G,
-  MITRED_B,
-} from "./images-etc.js";
-
+import { fullMap, plate, walk_1, walk_2, buttonLocations } from "./images-etc.js";
 import { getBeaverAngle } from "./movement-logic.js";
-
-let canvas;
 
 ////////////////////////////////////
 ///  draw background and plates  ///

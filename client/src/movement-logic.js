@@ -1,4 +1,3 @@
-// ... (constants and variables)
 let inputDirection = { x: 0, y: 0 };
 let angle = 0;
 let count = 1; // count for setting up walkFrame

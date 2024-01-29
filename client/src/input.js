@@ -1,8 +1,4 @@
 import {
-  fullMap,
-  plate,
-  walk_1,
-  walk_2,
   buttonLocations,
   BACKGROUND_R,
   BACKGROUND_G,
@@ -51,42 +47,40 @@ const moveBeaver = (context, beaverDir, mapPosition) => {
 ////////////////////////////////////
 
 const handleClick = (context, mapPosition) => {
-  window.addEventListener("click", (event) => {
-    let buildingClicked;
-    // let rect = canvas.getBoundingClientRect();
-    // let xcoord = event.clientX - rect.left;
-    // let ycoord = event.clientY - rect.top;
-    let xcoord = event.clientX;
-    let ycoord = event.clientY;
-    let pixel = context.getImageData(xcoord, ycoord, 1, 1);
-    // console.log(xcoord + ", " + ycoord); // for testing
-    // console.log(pixel.data[0] + ", " + pixel.data[1] + ", " + pixel.data[2]); // for testing
-    if (pixel.data[0] === MITRED_R && pixel.data[1] === MITRED_G && pixel.data[2] === MITRED_B) {
-      let clickedX = mapPosition.x - xcoord;
-      let clickedY = mapPosition.y - ycoord;
-      // console.log(clickedX + ", " + clickedY);
-      // let buildingClicked;
-      for (var key in buttonLocations) {
-        if (
-          clickedX <= buttonLocations[key][0] + 25 &&
-          clickedX >= buttonLocations[key][0] - 25 &&
-          clickedY <= buttonLocations[key][1] + 25 &&
-          clickedY >= buttonLocations[key][1] - 25
-        ) {
-          buildingClicked = key;
-          break;
-        }
+  let buildingClicked;
+  // let rect = canvas.getBoundingClientRect();
+  // let xcoord = event.clientX - rect.left;
+  // let ycoord = event.clientY - rect.top;
+  let xcoord = event.clientX;
+  let ycoord = event.clientY;
+  let pixel = context.getImageData(xcoord, ycoord, 1, 1);
+  // console.log(xcoord + ", " + ycoord); // for testing
+  // console.log(pixel.data[0] + ", " + pixel.data[1] + ", " + pixel.data[2]); // for testing
+  if (pixel.data[0] === MITRED_R && pixel.data[1] === MITRED_G && pixel.data[2] === MITRED_B) {
+    let clickedX = mapPosition.x - xcoord;
+    let clickedY = mapPosition.y - ycoord;
+    // console.log(clickedX + ", " + clickedY);
+    // let buildingClicked;
+    for (var key in buttonLocations) {
+      if (
+        clickedX <= buttonLocations[key][0] + 25 &&
+        clickedX >= buttonLocations[key][0] - 25 &&
+        clickedY <= buttonLocations[key][1] + 25 &&
+        clickedY >= buttonLocations[key][1] - 25
+      ) {
+        buildingClicked = key;
+        break;
       }
-      console.log(buildingClicked);
-      get("/api/whoami").then((user) => {
-        if (user._id) {
-          post("/api/update_position", { userid: user._id, x: mapPosition.x, y: mapPosition.y });
-        }
-      });
-      // Redirect to the /feed page with buildingClicked as a query parameter
-      window.location.href = `/feed/${buildingClicked}`;
     }
-  });
+    console.log(buildingClicked);
+    get("/api/whoami").then((user) => {
+      if (user._id) {
+        post("/api/update_position", { userid: user._id, x: mapPosition.x, y: mapPosition.y });
+      }
+    });
+    // Redirect to the /feed page with buildingClicked as a query parameter
+    window.location.href = `/feed/${buildingClicked}`;
+  }
 };
 
 export { moveBeaver, handleClick };

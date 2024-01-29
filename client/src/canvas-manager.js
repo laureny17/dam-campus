@@ -5,6 +5,9 @@ import { moveBeaver, handleClick } from "./input.js";
 
 let canvas;
 
+let d = new Date();
+let timePrev = d.getTime();
+
 ////////////////////////////////////
 /// map setup & window logistics ///
 ////////////////////////////////////
@@ -54,5 +57,18 @@ export const draw = (countFrame, canvasRef) => {
   drawMap(context, mapPosition);
   drawBeaver(context, walkFrame);
 
-  handleClick(context, mapPosition);
+  let dNow = new Date();
+  let timeNow = dNow.getTime();
+
+  if (timeNow - timePrev >= 500) {
+    window.addEventListener(
+      "click",
+      (event) => {
+        handleClick(context, mapPosition);
+        window.removeEventListener("click", handleClick);
+      },
+      { once: true }
+    );
+    timePrev = timeNow;
+  }
 };

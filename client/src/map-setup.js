@@ -1,5 +1,3 @@
-// Import necessary modules
-
 const getCoords = async () => {
   let coordinates = [2600, 975];
   const user = await fetch("/api/whoami").then((response) => response.json());
