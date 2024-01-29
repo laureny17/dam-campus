@@ -13,7 +13,7 @@ let sprites = {
 
 Object.keys(sprites).forEach((key) => {
   sprites[key] = new Image(1000, 1000);
-  sprites[key].src = `../beavers/${key}/${key}_walk1.png`; // Load sprites from beavers in dist
+  sprites[key].src = `../beavers/${key}/${key}_walk1.PNG`; // Load sprites from beavers in dist
 });
 
 export const drawAvatar = (count, canvasRef) => {

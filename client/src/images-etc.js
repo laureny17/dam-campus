@@ -10,8 +10,8 @@ const MITRED_B = 20;
 const fullMap = new Image(4000, 6000);
 fullMap.src = "../fullMap.png";
 
-const plate = new Image(280, 280);
-plate.src = "../stuff/plate.png";
+// const plate = new Image(280, 280);
+// plate.src = "../stuff/plate.png";
 
 let walk_1 = {
   cool_blank: null,
@@ -37,11 +37,11 @@ let walk_2 = {
 // load each image
 Object.keys(walk_1).forEach((key) => {
   walk_1[key] = new Image(500, 500);
-  walk_1[key].src = `../beavers/${key}/${key}_walk1.png`; // Load sprites from beavers in dist
+  walk_1[key].src = `../beavers/${key}/${key}_walk1.PNG`; // Load sprites from beavers in dist
 });
 Object.keys(walk_2).forEach((key) => {
   walk_2[key] = new Image(500, 500);
-  walk_2[key].src = `../beavers/${key}/${key}_walk2.png`; // Load sprites from beavers in dist
+  walk_2[key].src = `../beavers/${key}/${key}_walk2.PNG`; // Load sprites from beavers in dist
 });
 
 // coordinate locations of center of buttons on the full map
@@ -82,7 +82,7 @@ let buttonLocations = {
 
 export {
   fullMap,
-  plate,
+  // plate,
   walk_1,
   walk_2,
   buttonLocations,

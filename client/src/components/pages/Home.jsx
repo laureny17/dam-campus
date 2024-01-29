@@ -41,7 +41,7 @@ const Home = ({ userId, handleLogin, handleLogout }) => {
         <section className="section color-dark">
           <div className="Title-container">
             <h1 className="first-page">Welcome to the Dam Campus.</h1>
-            <body className="description">Your explorer:</body>
+            <h3 className="description">Your explorer:</h3>
             <AvatarCanvas />
             <center>
               {/* <a href="/map"> */}
@@ -56,7 +56,7 @@ const Home = ({ userId, handleLogin, handleLogout }) => {
         <section className="section color-light">
           <div className="Tutorial-container">
             <h1>How to Play</h1>
-            <body>to do</body>
+            <h3>to do</h3>
           </div>
         </section>
       </section>
