@@ -19,7 +19,6 @@ const Card = (props) => {
         _id={props._id}
         creator_name={props.creator_name}
         content={props.content}
-        building_number={props.building_number} // for the display, see singlestory.js
         // votes={props.votes}
       />
     </div>

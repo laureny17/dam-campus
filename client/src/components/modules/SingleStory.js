@@ -16,7 +16,6 @@ const SingleStory = (props) => {
       {/* <div className="upvotes-box">{props.upvotes}</div> */}
       <span className="u-bold">{props.creator_name}</span>
       <p className="Card-storyContent">{props.content}</p>
-      <p>{props.building_number}</p>
       {/* ^^delete later, don't want to actually display building number? */}
     </div>
   );

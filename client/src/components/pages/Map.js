@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import Canvas from "./Canvas.js";
 import { get } from "../../utilities";
 // import { handleInput } from "../../input";
@@ -11,6 +12,7 @@ import "../../utilities.css";
 import "./Map.css";
 
 const Map = () => {
+  const navigate = useNavigate();
   useEffect(() => {
     get("/api/whoami").then((user) => {
       if (user._id) {
@@ -20,7 +22,7 @@ const Map = () => {
           </div>
         );
       } else {
-        return window.alert("Please sign in to access the map!");
+        navigate("/");
       }
     });
   }, []);

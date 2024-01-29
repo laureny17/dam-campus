@@ -20,13 +20,13 @@ const auth = require("./auth");
 const router = express.Router();
 
 // router.get("/stories", (req, res) => {
-//   // empty selector means get all documents
 //   Story.find({ building_number: 1 }).then((stories) => res.send(stories));
 // });
 
 router.get("/stories", (req, res) => {
-  // get all stories w/ building number from request?
+  console.log(req.query.building_number);
   Story.find({ building_number: req.query.building_number }).then((stories) => res.send(stories));
+  // Story.find({ building_number: req.user.currBuilding }).then((stories) => res.send(stories));
 });
 
 router.post("/story", auth.ensureLoggedIn, (req, res) => {
@@ -34,9 +34,9 @@ router.post("/story", auth.ensureLoggedIn, (req, res) => {
     creator_id: req.user._id,
     creator_name: req.user.name,
     content: req.body.content,
-    building_number: req.user.currBuilding, // um???
-    // building_number: req.body.building_number, // this isn't working... does work if i manually type in a number
-    // votes: req.body.upvotes,
+    building_number: req.body.building_number,
+    // building_number: req.body.building_number, // works if manually type in a number
+    // votes: req.body.upvotes, // do if there is time
   });
   newStory.save().then((story) => res.send(story));
 });
@@ -71,6 +71,23 @@ router.post("/initsocket", (req, res) => {
 // |------------------------------|
 // | write your API methods below!|
 // |------------------------------|
+
+router.get("/update_position", (req, res) => {
+  User.findById(req.query.userid).then((user) => {
+    user.x_position = req.body.x; // or req.query...?
+    user.y_position = req.body.y;
+    user.save();
+    res.send(user);
+  });
+});
+
+router.get("/get_position", (req, res) => {
+  User.findById(req.query.userid).then((user) => {
+    const x = req.user.x_position;
+    const y = req.user.y_position;
+    res.send([x, y]);
+  });
+});
 
 // anything else falls to this "not found" case
 router.all("*", (req, res) => {

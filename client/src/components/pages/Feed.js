@@ -1,19 +1,30 @@
 import React, { useState, useEffect } from "react";
-import { get } from "../../utilities";
+import { useParams } from "react-router-dom";
+import { get, post } from "../../utilities";
 import Card from "../modules/Card.js";
 import { NewStory } from "../modules/NewPostInput.js";
 import "./Feed.css";
+import { getBuilding } from "../../canvas-manager";
 
 // import { GoogleOAuthProvider, GoogleLogin, googleLogout } from "@react-oauth/google";
 // const GOOGLE_CLIENT_ID = "644652111219-c770r1ssmkcpnnp5saugn1dj1cmct07v.apps.googleusercontent.com";
 // // need { userId, handleLogin, handleLogout } inside Feed = () if want login button
 
 const Feed = () => {
+  // let currUserId;
+  // get("/api/whoami").then((user) => {
+  //   currUserId = user._id;
+  // });
+  // post("/api/updateUserBuilding", { id: currUserId, currBuilding: getBuilding }).then((user) => {});
+
+  const { buildingClicked } = useParams();
+
   const [stories, setStories] = useState([]);
 
   // tried to change this so that it only shows us stories from a certain building number...
   useEffect(() => {
-    get("/api/stories").then((storyObjs) => {
+    console.log(buildingClicked);
+    get("/api/stories", { building_number: buildingClicked }).then((storyObjs) => {
       setStories(storyObjs);
     });
   }, []);
@@ -33,7 +44,6 @@ const Feed = () => {
         _id={storyObj._id}
         creator_name={storyObj.creator_name}
         content={storyObj.content}
-        building_number={storyObj.building_number} // this is for the display.. i think. go to Card.js
         // votes={storyObj.votes}
       />
     ));
@@ -42,25 +52,9 @@ const Feed = () => {
   }
   return (
     <>
-      {/* <div className="feed-button">
-        <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
-          {userId ? (
-            <button
-              onClick={() => {
-                googleLogout();
-                handleLogout();
-              }}
-            >
-              Logout
-            </button>
-          ) : (
-            <GoogleLogin onSuccess={handleLogin} onError={(err) => console.log(err)} />
-          )}
-        </GoogleOAuthProvider>
-      </div> */}
-      <h1>Building</h1>
+      <h1>Building {buildingClicked}</h1>
       <div>
-        <NewStory addNewStory={addNewStory} />
+        <NewStory addNewStory={addNewStory} building_number={buildingClicked} />
         {storiesList}
       </div>
     </>
