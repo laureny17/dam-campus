@@ -1,10 +1,21 @@
+.flex-container {
+  display: flex;
+}
+
 .Card-container {
+  /* flex: 14; */
   border: var(--darkgrey) 1px solid;
   border-radius: var(--xs);
   margin-top: var(--m);
-  margin-left: 20vw;
+  margin-left: 20vw; /* remove if going to use side container */
   margin-right: 20vw;
 }
+
+/* .side-container {
+  flex: 1;
+  margin-top: var(--m);
+  margin-left: 20vw;
+} */
 
 .Card-container:first-of-type {
   margin-top: var(--l);
@@ -20,8 +31,22 @@
 }
 
 .Card-storyContent {
+  flex: 1;
   font-size: 15px;
   margin: var(--s) 0 0;
+  line-height: 175%;
+}
+
+.Card-storyDate {
+  flex: 2;
+  font-size: 12px;
+  text-align: right;
+  line-height: 175%;
+}
+.Card-storyLikes {
+  flex: 1;
+  font-size: 12px;
+  text-align: left;
   line-height: 175%;
 }
 

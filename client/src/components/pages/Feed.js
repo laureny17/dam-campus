@@ -44,6 +44,8 @@ const Feed = () => {
         _id={storyObj._id}
         creator_name={storyObj.creator_name}
         content={storyObj.content}
+        post_date={storyObj.post_date}
+        num_likes={storyObj.num_likes}
         // votes={storyObj.votes}
       />
     ));

@@ -35,8 +35,8 @@ router.post("/story", auth.ensureLoggedIn, (req, res) => {
     creator_name: req.user.name,
     content: req.body.content,
     building_number: req.body.building_number,
-    // building_number: req.body.building_number, // works if manually type in a number
-    // votes: req.body.upvotes, // do if there is time
+    post_date: req.body.post_date,
+    num_likes: 0,
   });
   newStory.save().then((story) => res.send(story));
 });

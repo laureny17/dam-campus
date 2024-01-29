@@ -56,14 +56,42 @@ const NewPostInput = (props) => {
 
 const NewStory = (props) => {
   const addStory = (value) => {
-    const body = { content: value, building_number: props.building_number };
+    let d = new Date();
+    let day = d.getDate();
+    let month = d.getMonth();
+    let year = d.getFullYear();
+    let fullDate = combineDate(day, month, year);
+    const body = {
+      content: value,
+      building_number: props.building_number,
+      post_date: fullDate,
+      num_likes: props.num_likes,
+    };
     post("/api/story", body).then((story) => {
-      // display this story on the screen
       props.addNewStory(story);
     });
   };
 
   return <NewPostInput defaultText="Write a Post..." onSubmit={addStory} />;
+};
+
+const combineDate = (d, m, y) => {
+  return `${months[m]} ${d}, ${y}`;
+};
+
+const months = {
+  0: "January",
+  1: "February",
+  2: "March",
+  3: "April",
+  4: "May",
+  5: "June",
+  6: "July",
+  7: "August",
+  8: "September",
+  9: "October",
+  10: "November",
+  11: "December",
 };
 
 export { NewStory };

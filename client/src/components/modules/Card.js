@@ -19,6 +19,8 @@ const Card = (props) => {
         _id={props._id}
         creator_name={props.creator_name}
         content={props.content}
+        num_likes={props.num_likes}
+        post_date={props.post_date}
         // votes={props.votes}
       />
     </div>
