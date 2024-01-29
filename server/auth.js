@@ -28,7 +28,9 @@ function getOrCreateUser(user) {
       googleid: user.sub,
       color: "warm",
       accessory: "blank",
-      currBuilding: 7,
+      x_position: 2600,
+      y_position: 975,
+      // currBuilding: 7,
     });
 
     return newUser.save();

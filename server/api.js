@@ -24,6 +24,7 @@ const router = express.Router();
 // });
 
 router.get("/stories", (req, res) => {
+  console.log(req.query.building_number);
   Story.find({ building_number: req.query.building_number }).then((stories) => res.send(stories));
   // Story.find({ building_number: req.user.currBuilding }).then((stories) => res.send(stories));
 });
@@ -33,7 +34,7 @@ router.post("/story", auth.ensureLoggedIn, (req, res) => {
     creator_id: req.user._id,
     creator_name: req.user.name,
     content: req.body.content,
-    building_number: req.user.currBuilding,
+    building_number: req.body.building_number,
     // building_number: req.body.building_number, // works if manually type in a number
     // votes: req.body.upvotes, // do if there is time
   });
@@ -71,18 +72,27 @@ router.post("/initsocket", (req, res) => {
 // | write your API methods below!|
 // |------------------------------|
 
+router.get("/update_position", (req, res) => {
+  User.findById(req.query.userid).then((user) => {
+    user.x_position = req.body.x; // or req.query...?
+    user.y_position = req.body.y;
+    user.save();
+    res.send(user);
+  });
+});
+
+router.get("/get_position", (req, res) => {
+  User.findById(req.query.userid).then((user) => {
+    const x = req.user.x_position;
+    const y = req.user.y_position;
+    res.send([x, y]);
+  });
+});
+
 // anything else falls to this "not found" case
 router.all("*", (req, res) => {
   console.log(`API route not found: ${req.method} ${req.url}`);
   res.status(404).send({ msg: "API route not found" });
 });
-
-// router.post("/api/updateUserBuilding", (req, res) => {
-//   User.findOne({ id: req.body.id }).then((user) => {
-//     user.currBuilding = req.body.currBuilding; // ?
-//     user.save();
-//     res.send(user);
-//   });
-// });
 
 module.exports = router;

@@ -53,7 +53,7 @@ const App = () => {
         element={<Home handleLogin={handleLogin} handleLogout={handleLogout} userId={userId} />}
       />
       <Route path="/map" element={<Map />} />
-      <Route path="/feed" element={<Feed />} />
+      <Route path="/feed/:buildingClicked" element={<Feed />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
   );

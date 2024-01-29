@@ -5,7 +5,9 @@ const UserSchema = new mongoose.Schema({
   googleid: String,
   color: String, // not in use yet
   accessory: String, // not in use yet
-  currBuilding: Number,
+  // currBuilding: Number,
+  x_position: Number,
+  y_position: Number,
 });
 
 // compile model from schema
