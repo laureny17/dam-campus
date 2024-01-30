@@ -17,70 +17,6 @@ const SQRT_2 = 1.41;
 ///      movement mechanics      ///
 ////////////////////////////////////
 
-// const moveBeaver = (context, beaverDir, mapPosition) => {
-//   // first, check if the beaver can move in that input dir
-//   // if there is a wall in front of him, we won't want him to move
-//   // slightly buggy for diagonals/corners!!!! fix later
-//   let next = { x: context.canvas.width / 2, y: context.canvas.height / 2 };
-
-//   if (beaverDir.y === 0) {
-//     next.x += beaverDir.x * BEAVER_SIZE;
-//   } else if (beaverDir.x === 0) {
-//     next.y += beaverDir.y * BEAVER_SIZE;
-//   } else {
-//     next.x += (beaverDir.x / (SQRT_2 - 0.2)) * BEAVER_SIZE;
-//     next.y += (beaverDir.y / (SQRT_2 - 0.2)) * BEAVER_SIZE;
-//   }
-
-//   // const pix = context.getImageData(next.x - 2, next.y - 2, 4, 4);
-
-//   next.x -= 3;
-//   next.y -= 3;
-
-//   // const pix = context.getImageData(next.x, next.y, 1, 1);
-//   let pixels = [];
-//   for (let i = 0; i < 6; i++) {
-//     for (let j = 0; j < 6; j++) {
-//       pixels.push(context.getImageData(next.x + i, next.y + j, 1, 1));
-//     }
-//   }
-
-//   let canMove = true;
-//   for (var onePix of pixels) {
-//     if (onePix.data[0] !== 255 && onePix.data[1] !== 255 && onePix.data[2] !== 255) {
-//       canMove = false;
-//       break;
-//     }
-//   }
-
-//   // for (let i = 0; i <= 96; i += 4) {
-//   //   if (
-//   //     pix.data[i] === BACKGROUND_R &&
-//   //     pix.data[i + 1] === BACKGROUND_G &&
-//   //     pix.data[i + 2] === BACKGROUND_B
-//   //   ) {
-//   //     canMove = false;
-//   //     break;
-//   //   }
-//   // }
-//   if (!canMove) {
-//     mapPosition.y += beaverDir.y * 2;
-//     mapPosition.x += beaverDir.x * 2;
-//   } else {
-//     // give multiplier for speed
-//     if (beaverDir.x === 0 && beaverDir.y !== 0) {
-//       mapPosition.y -= beaverDir.y * 3;
-//     } else if (beaverDir.y === 0 && beaverDir.x !== 0) {
-//       mapPosition.x -= beaverDir.x * 3;
-//     }
-//     // if moving diagonally, use diff speed multiplier so it's not extra fast
-//     else if (beaverDir.x !== 0 && beaverDir.y !== 0) {
-//       mapPosition.y -= beaverDir.y * 2;
-//       mapPosition.x -= beaverDir.x * 2;
-//     }
-//   }
-// };
-
 const moveBeaver = (context, beaverDir, mapPosition) => {
   // first, check if the beaver can move in that input dir
   // if there is a wall in front of him, we won't want him to move
@@ -129,11 +65,6 @@ const moveBeaver = (context, beaverDir, mapPosition) => {
     next2.x += (beaverDir.x * BEAVER_SIZE) / SQRT_2 - 15 / (SQRT_2 - 0.2);
     next2.y += (beaverDir.y * BEAVER_SIZE) / SQRT_2;
   }
-  // else if (beaverDir.x === -1 && beaverDir.y === 1) {
-  //   // angle = 225;
-  // } else if (beaverDir.x === -1 && beaverDir.y === -1) {
-  //   // angle = 315;
-  // }
 
   const pix = context.getImageData(next.x, next.y, 1, 1);
   const pix1 = context.getImageData(next1.x, next1.y, 1, 1);
