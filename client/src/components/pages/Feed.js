@@ -25,7 +25,7 @@ const Feed = () => {
 
   // tried to change this so that it only shows us stories from a certain building number...
   useEffect(() => {
-    console.log(buildingClicked);
+    // console.log(buildingClicked);
     get("/api/stories", { building_number: buildingClicked }).then((storyObjs) => {
       setStories(storyObjs);
     });
