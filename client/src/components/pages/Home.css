@@ -7,6 +7,8 @@ h1 {
   font-style: normal;
   line-height: 100%;
   margin-bottom: 2%;
+  margin-left: 20vw;
+  margin-right: 20vw;
 }
 
 .first-page {
@@ -41,8 +43,6 @@ body {
   bottom: 0;
   left: 0;
   background-color: #b0907b;
-  /* width: 20px; /* idk why but setting width to any dimension makes it so that
-               only the button and not the entire top bar is clickable */
 }
 
 .Tutorial-container {
@@ -50,6 +50,10 @@ body {
   height: 100vh;
   overflow-x: hidden;
   text-align: center;
+}
+
+.Tutorial-explanation {
+  font-size: 20px;
 }
 
 .section {
@@ -80,19 +84,60 @@ body {
   font-weight: 300;
 }
 
-button {
+.button-logout {
   width: fit-content;
-  padding-left: 1.5vw;
-  padding-right: 1.5vw;
-  padding-top: 1vh;
-  padding-bottom: 1vh;
+  padding: 2vh 1.5vw; /* Adjust padding as needed */
   font-family: "Courier New", monospace;
+  font-size: 15px;
   font-weight: 200;
+  background-color: #3b302a; /* Your desired button color */
+  color: #ffffff; /* Your desired text color */
+  border: none;
+  /* Set border-radius for each corner individually */
+  /* border-top-right-radius: 5px;
+  border-bottom-left-radius: 5px; */
+  border-bottom-right-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.arrowDown {
-  font-size: 75px;
-  padding-right: 10vw;
-  margin-right: -95vw;
-  margin-top: -3%;
+.button-logout:hover {
+  background-color: #634f48; /* Your desired hover color */
+  color: #ffffff; /* Your desired hover text color */
+}
+
+.enter-map-button {
+  position: relative;
+  margin: 0 auto; /* Center the button horizontally */
+  width: 200px;
+  padding: 15px;
+  font-family: "Courier New", monospace;
+  font-weight: 400;
+  font-size: 18px;
+  color: #fff;
+  background-color: #3b302a;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
+}
+
+.enter-map-button:hover {
+  color: #b0907b; /* Text color on hover */
+  background-color: #fff; /* Background color on hover */
+  transform: scale(1.05); /* Slight scale-up on hover */
+}
+
+.customization-button {
+  background-color: none;
+  border: none;
+  background-color: #b0907b;
+  color: #3b302a;
+  font-size: 30px;
+  transition: transform 0.2s ease;
+}
+
+.customization-button:hover {
+  color: #fff;
+  transform: scale(1.1); /* Slight scale-up on hover */
 }
