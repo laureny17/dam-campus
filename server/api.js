@@ -23,10 +23,11 @@ const router = express.Router();
 //   Story.find({ building_number: 1 }).then((stories) => res.send(stories));
 // });
 
-router.get("/stories", (req, res) => {
-  console.log(req.query.building_number);
-  Story.find({ building_number: req.query.building_number }).then((stories) => res.send(stories));
-  // Story.find({ building_number: req.user.currBuilding }).then((stories) => res.send(stories));
+router.get("/stories", async (req, res) => {
+  const stories = await Story.find({ building_number: req.query.building_number }).sort({
+    creation_date: -1,
+  });
+  res.send(stories);
 });
 
 router.post("/story", auth.ensureLoggedIn, (req, res) => {
@@ -36,7 +37,7 @@ router.post("/story", auth.ensureLoggedIn, (req, res) => {
     content: req.body.content,
     building_number: req.body.building_number,
     post_date: req.body.post_date,
-    num_likes: 0,
+    liked_users_list: [],
   });
   newStory.save().then((story) => res.send(story));
 });
@@ -88,6 +89,48 @@ router.get("/get_position", (req, res) => {
     let x = req.user.x_position;
     let y = req.user.y_position;
     res.send([x, y]);
+  });
+});
+
+//////// liking a post ////////
+
+router.post("/like_toggle", auth.ensureLoggedIn, (req, res) => {
+  const storyId = req.body._id; // is req.body the story obj ?
+  const userId = req.body.userId; // does this work
+
+  Story.findById(storyId)
+    .then((story) => {
+      const userIndex = story.liked_users_list.indexOf(userId);
+      if (userIndex !== -1) {
+        story.liked_users_list.splice(userIndex, 1);
+      } else {
+        story.liked_users_list.push(userId);
+      }
+
+      return story.save(); // Save the changes and return the updated story
+    })
+    .then((updatedStory) => {
+      const likeCount = updatedStory.liked_users_list.length;
+      res.send({ updatedStory, likeCount });
+    });
+});
+
+router.get("/like_status", auth.ensureLoggedIn, (req, res) => {
+  const storyId = req.query._id;
+  const userId = req.query.userId;
+
+  // Find the story and check if the user has liked it
+  Story.findById(storyId).then((story) => {
+    const isLiked = story.liked_users_list.includes(userId);
+    res.send({ isLiked });
+  });
+});
+
+router.get("/like_count", (req, res) => {
+  const storyId = req.query._id;
+  Story.findById(storyId).then((story) => {
+    const likeCount = story.liked_users_list.length;
+    res.send(String(likeCount));
   });
 });
 

@@ -6,7 +6,8 @@ const StorySchema = new mongoose.Schema({
   content: String,
   building_number: Number,
   post_date: String,
-  num_likes: Number,
+  liked_users_list: Array,
+  creation_date: { type: Date, default: Date.now },
 });
 
 module.exports = mongoose.model("story", StorySchema);

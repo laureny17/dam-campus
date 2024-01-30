@@ -26,9 +26,6 @@ const Map = () => {
       }
     });
   }, []);
-  // users not signed in can still access by typing in url directly...
-  // if i remove this return statement it returns a blank page for both signed in and not signed in users,
-  // so this was the better alternative
   return (
     <div>
       <Canvas />

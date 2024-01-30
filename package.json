@@ -19,6 +19,9 @@
     "node": ">=18.x"
   },
   "dependencies": {
+    "@fortawesome/free-regular-svg-icons": "^6.5.1",
+    "@fortawesome/free-solid-svg-icons": "^6.5.1",
+    "@fortawesome/react-fontawesome": "^0.2.0",
     "@mantine/core": "^7.4.2",
     "@mantine/hooks": "^7.4.2",
     "@next/font": "^14.1.0",

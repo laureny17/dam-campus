@@ -12,16 +12,18 @@ import "./Card.css";
  * @param {string} creator_name
  * @param {string} content of the story
  */
+
 const Card = (props) => {
   return (
     <div className="Card-container">
       <SingleStory
         _id={props._id}
+        userId={props.userId} // Pass userId to SingleStory
         creator_name={props.creator_name}
         content={props.content}
         num_likes={props.num_likes}
         post_date={props.post_date}
-        // votes={props.votes}
+        liked_users_list={props.liked_users_list}
       />
     </div>
   );

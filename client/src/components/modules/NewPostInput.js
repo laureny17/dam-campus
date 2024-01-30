@@ -65,7 +65,7 @@ const NewStory = (props) => {
       content: value,
       building_number: props.building_number,
       post_date: fullDate,
-      num_likes: props.num_likes,
+      liked_users_list: props.liked_users_list,
     };
     post("/api/story", body).then((story) => {
       props.addNewStory(story);

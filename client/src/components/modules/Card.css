@@ -1,5 +1,9 @@
 .flex-container {
   display: flex;
+  font-size: 15px;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: -2.5%;
 }
 
 .Card-container {
@@ -38,16 +42,26 @@
 }
 
 .Card-storyDate {
-  flex: 2;
-  font-size: 12px;
+  flex: 10;
+  color: #8b959e;
+  font-weight: 100;
   text-align: right;
-  line-height: 175%;
 }
+
 .Card-storyLikes {
-  flex: 1;
-  font-size: 12px;
+  flex: 5;
+  color: #8b959e;
   text-align: left;
-  line-height: 175%;
+}
+
+.heart-button {
+  font-size: 20px;
+  background: none;
+  border: none;
+  padding-left: 0;
+  padding-right: 1.5%;
+  cursor: pointer;
+  outline: none;
 }
 
 .u-bold {

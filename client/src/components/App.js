@@ -25,7 +25,7 @@ const App = () => {
   useEffect(() => {
     get("/api/whoami").then((user) => {
       if (user._id) {
-        // they are registed in the database, and currently logged in.
+        // if logged in
         setUserId(user._id);
       }
     });
