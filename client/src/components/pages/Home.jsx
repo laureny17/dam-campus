@@ -58,53 +58,34 @@ const Home = ({ userId, handleLogin, handleLogout }) => {
     "warm_sunglasses",
   ];
 
-  // default beaver is cool w/ no accessories
-  const [userBeaver, setUserBeaver] = useState("cool_blank");
-  // if user logged in, get their last chosen beaver
-  useEffect(() => {
-    get("/api/whoami")
-      .then((user) => {
-        if (user._id) {
-          get("/api/get_avatar_type", { _id: user._id })
-            .then((userBeaverType) => setUserBeaver(userBeaverType))
-            .catch((error) => console.error("Error fetching avatar type:", error));
-        }
-      })
-      .catch((error) => console.error("Error fetching user:", error));
-  }, []);
-  console.log(userBeaver); // ooooooooo i think it works
-
   let beaverNum = 0;
-  if (userBeaver !== "cool_blank") {
-    beaverNum = beavers.indexOf(userBeaver);
-  }
+  // const userBeaver = "cool_blank";
+
+  const [currentBeaver, setCurrentBeaver] = useState(
+    localStorage.getItem("userBeaver") || "cool_blank"
+  );
+  console.log("orig beaver: " + currentBeaver);
 
   const handleLeftClick = () => {
-    beaverNum += 8 - 1;
-    beaverNum = beaverNum % 8;
-    setUserBeaver(beavers[beaverNum]);
+    setCurrentBeaver((prevBeaver) => {
+      let index = beavers.indexOf(prevBeaver);
+      index = (index + beavers.length - 1) % beavers.length;
+      return beavers[index];
+    });
   };
 
   const handleRightClick = () => {
-    beaverNum++;
-    beaverNum = beaverNum % 8;
-    setUserBeaver(beavers[beaverNum]);
+    setCurrentBeaver((prevBeaver) => {
+      let index = beavers.indexOf(prevBeaver);
+      index = (index + 1) % beavers.length;
+      return beavers[index];
+    });
   };
 
   useEffect(() => {
-    get("/api/whoami").then((user) => {
-      console.log("user id:", user._id);
-      console.log("user beaver:", userBeaver);
-
-      if (user._id) {
-        post("/api/update_avatar", { _id: user._id, beaverType: userBeaver }).then(
-          (updatedUser) => {
-            console.log("avatar updated:", updatedUser);
-          }
-        );
-      }
-    });
-  }, [userBeaver]);
+    localStorage.setItem("userBeaver", currentBeaver);
+    console.log("updated to " + currentBeaver);
+  }, [currentBeaver]);
 
   return (
     <>
@@ -134,13 +115,6 @@ const Home = ({ userId, handleLogin, handleLogout }) => {
             transform: `translateY(${offsetY * 0.9}px) scale(${1 + offsetY * 0.0002})`,
           }}
         ></img>
-        {/* <img
-src={bg_dome.src}
-className="bg-dome"
-// style={{
-// transform: `translateY(${-offsetY * 0.05}px)`,
-// }}
-></img> */}
       </div>
 
       <div className="main">
@@ -154,7 +128,7 @@ className="bg-dome"
                 {arrowleft}
               </button>
               <div className="avatar-canvas">
-                <AvatarCanvas beaverType={userBeaver} />
+                <AvatarCanvas beaverType={currentBeaver} />
               </div>
               <button className="canv-arrowright" onClick={handleRightClick}>
                 {arrowright}
