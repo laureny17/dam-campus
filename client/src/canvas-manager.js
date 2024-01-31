@@ -2,6 +2,7 @@ import { updateCoordinates } from "./map-setup.js";
 import { getInputDirection, getBeaverAngle, walkFrame } from "./movement-logic.js";
 import { drawMap, drawBeaver } from "./draw.js";
 import { moveBeaver, handleClick } from "./input.js";
+import { useEffect } from "react";
 
 let canvas;
 
@@ -16,7 +17,7 @@ let xPos = 2600;
 let yPos = 975;
 let mapPosition = { x: xPos, y: yPos };
 
-updateCoordinates(xPos, yPos, mapPosition);
+// updateCoordinates(xPos, yPos, mapPosition);
 
 // initial position of map (positive x left, positive y up)
 // = initial position of beaver... with (0, 0) was bottom right and (4000, 6000) as top left
@@ -44,7 +45,7 @@ window.addEventListener("resize", () => {
   mapPosition.y += changeInHeight / 2;
 });
 
-export const draw = (countFrame, canvasRef) => {
+export const draw = (mapPosition, canvasRef) => {
   canvas = canvasRef.current;
   if (!canvas) {
     return;
@@ -56,6 +57,11 @@ export const draw = (countFrame, canvasRef) => {
 
   drawMap(context, mapPosition);
   drawBeaver(context, walkFrame);
+
+  if (performance.now() % 5000 < 16.67) {
+    // Approximately every 5 seconds
+    localStorage.setItem("mapPosition", JSON.stringify(mapPosition));
+  }
 
   let dNow = new Date();
   let timeNow = dNow.getTime();

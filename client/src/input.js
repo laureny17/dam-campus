@@ -143,14 +143,10 @@ const handleClick = (context, mapPosition) => {
         break;
       }
     }
-    // console.log(buildingClicked);
-    get("/api/whoami").then((user) => {
-      if (user._id) {
-        post("/api/update_position", { userid: user._id, x: mapPosition.x, y: mapPosition.y });
-      }
-    });
-    // Redirect to the /feed page with buildingClicked as a query parameter
-    window.location.href = `/feed/${buildingClicked}`;
+    if (buildingClicked) {
+      localStorage.setItem("mapPosition", JSON.stringify(mapPosition));
+      window.location.href = `/feed/${buildingClicked}`;
+    }
   }
 };
 

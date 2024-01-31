@@ -18,29 +18,23 @@ const Canvas = (props) => {
     });
   }, []);
 
-  useEffect(() => {
-    let count = 0;
-    let animationID;
+  let mapPosition = [0, 0];
 
+  useEffect(() => {
+    const savedMapPosition = localStorage.getItem("mapPosition");
+    let mapPosition = savedMapPosition ? JSON.parse(savedMapPosition) : { x: 2600, y: 975 };
+
+    let animationID;
     const renderer = () => {
-      count++;
-      draw(count, canvasRef); // see canvas-manager
+      draw(mapPosition, canvasRef); // Call to draw with the correct parameters
       animationID = window.requestAnimationFrame(renderer);
     };
     renderer();
 
-    return () => window.cancelAnimationFrame(animationID); // https://www.youtube.com/watch?v=tev71VzEJos
-  }, [draw]);
+    return () => window.cancelAnimationFrame(animationID);
+  }, []);
 
-  return (
-    <canvas
-      className="map_canvas"
-      path="/map"
-      ref={canvasRef}
-      width={innerWidth}
-      height={innerHeight}
-    />
-  );
+  return <canvas className="map_canvas" ref={canvasRef} width={innerWidth} height={innerHeight} />;
 };
 
 export default Canvas;
