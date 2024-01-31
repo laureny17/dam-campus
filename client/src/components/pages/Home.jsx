@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { GoogleOAuthProvider, GoogleLogin, googleLogout } from "@react-oauth/google";
 import AvatarCanvas from "./AvatarCanvas";
 import { get, post } from "../../utilities";
+import { startRendering, drawAvatar } from "../../avatar-canvas-manager";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -79,7 +80,7 @@ const Home = ({ userId, handleLogin, handleLogout }) => {
   }
 
   const handleLeftClick = () => {
-    beaverNum--;
+    beaverNum += 8 - 1;
     beaverNum = beaverNum % 8;
     setUserBeaver(beavers[beaverNum]);
   };
@@ -91,15 +92,18 @@ const Home = ({ userId, handleLogin, handleLogout }) => {
   };
 
   useEffect(() => {
-    get("/api/whoami")
-      .then((user) => {
-        if (user._id) {
-          post("/api/update_avatar", { _id: user._id, beaverType: userBeaver })
-            .then((updatedUser) => {})
-            .catch((error) => console.error("Error updating avatar:", error));
-        }
-      })
-      .catch((error) => console.error("Error fetching user:", error));
+    get("/api/whoami").then((user) => {
+      console.log("user id:", user._id);
+      console.log("user beaver:", userBeaver);
+
+      if (user._id) {
+        post("/api/update_avatar", { _id: user._id, beaverType: userBeaver }).then(
+          (updatedUser) => {
+            console.log("avatar updated:", updatedUser);
+          }
+        );
+      }
+    });
   }, [userBeaver]);
 
   return (
@@ -130,13 +134,13 @@ const Home = ({ userId, handleLogin, handleLogout }) => {
             transform: `translateY(${offsetY * 0.9}px) scale(${1 + offsetY * 0.0002})`,
           }}
         ></img>
-        <img
-          src={bg_dome.src}
-          className="bg-dome"
-          // style={{
-          //   transform: `translateY(${-offsetY * 0.05}px)`,
-          // }}
-        ></img>
+        {/* <img
+src={bg_dome.src}
+className="bg-dome"
+// style={{
+// transform: `translateY(${-offsetY * 0.05}px)`,
+// }}
+></img> */}
       </div>
 
       <div className="main">
@@ -176,25 +180,19 @@ const Home = ({ userId, handleLogin, handleLogout }) => {
             >
               How to Play
             </h1>
-            <h3 className="tutorial-desc">
+            <h3 className="tutorial-desc-no-dome">
               Whether you're a seasoned student adventurer bursting with fun stories to tell, a
               pre-frosh with no sense of direction, or just someone passing by out of sheer
               curiosity, the Dam Campus is your ultimate virtual hub for connecting through the
               wonders of MIT's campus!
             </h3>
-            <h3 className="tutorial-main-desc">
-              Join the fun on our homepage where you can personalize your experience by choosing a
-              color and accessory for your beaver. Once you're ready, you'll be sent off to Lobby 7!
-              Returning user? No worries, we've got your back—you'll be dropped right back where you
-              left off.
-            </h3>
-            <h3 className="tutorial-main-desc-2">
-              Keep an eye out for those sneaky red panels in each building—they'll lead you to the
+            <h3 className="tutorial-desc-no-dome">
+              Keep an eye out for the red panels in each building—they'll lead you to the
               corresponding building page, where you can uncover the juiciest secrets of MIT's
               connected campus and the crazy cool students who roam it. Become a direct contributor
-              by sharing your own tales and fun facts, or simply kick back and enjoy reading through
-              the escapades of your fellow students! Ready to roll? Click that button and let the
-              your adventures begin!
+              by sharing stories, fun facts, and life pro tips of your own, or simply kick back and
+              enjoy reading through the escapades of your fellow students! Ready to roll? Click that
+              button and let the your adventures begin!
             </h3>
           </div>
         </section>
