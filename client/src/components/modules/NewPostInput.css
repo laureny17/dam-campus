@@ -3,40 +3,43 @@
   font-family: "Courier New", monospace;
   font-size: 14px;
   margin-top: 2vh;
+  margin-bottom: 1vh;
 }
 
 .NewPostInput-input {
   height: 5vh;
   flex-grow: 1;
-  text-wrap: pretty;
   min-height: 5vh;
   max-height: 50vh;
   resize: vertical;
-  border: var(--darkgrey) 1px solid;
-  border-radius: var(--xs) 0 0 var(--xs);
-  transition: box-shadow 0.1s;
+  border: none;
+  border-radius: 5px; /* Match roundedness with the button */
+  transition: box-shadow 0.3s, background-color 0.3s;
   padding: var(--s) var(--m);
   margin-left: 20vw;
+  background-color: #f9f9f9;
 }
 
 .NewPostInput-input:focus-within {
-  border-color: var(--primary--dim);
-  box-shadow: 0 0 0 var(--xs) var(--primary--dim);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
 }
 
 .NewPostInput-button {
   width: 10vw;
   text-align: center;
-  color: var(--primary);
-  border: var(--primary) 1px solid;
-  border-radius: 0 var(--xs) var(--xs) 0;
-  background: none;
-  transition: color 0.1s, background 0.1s;
-  padding: 0 0;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  background-color: #750014;
+  transition: background-color 0.3s, color 0.3s;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
   margin-right: 20vw;
 }
 
 .NewPostInput-button:hover {
-  color: var(--white);
-  background-color: var(--primary);
+  background-color: #5a0010;
+  color: #fff;
 }

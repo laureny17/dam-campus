@@ -1,3 +1,8 @@
+/* important colors:
+map background: #d7b9a5
+mit red: #750014
+mit gray: #8b959e */
+
 .flex-container {
   display: flex;
   font-size: 15px;
@@ -7,12 +12,22 @@
 }
 
 .Card-container {
-  /* flex: 14; */
-  border: var(--darkgrey) 1px solid;
-  border-radius: var(--xs);
-  margin-top: var(--m);
-  margin-left: 20vw; /* remove if going to use side container */
+  border: none;
+  border-radius: 15px;
+  margin: 10px 0;
+  margin-left: 20vw;
   margin-right: 20vw;
+  padding: 20px;
+  background-color: #f9f9f9;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transform: translateY(0);
+  opacity: 1;
+  transition: transform 0.3s, opacity 0.3s, box-shadow 0.3s;
+}
+
+.Card-container:hover {
+  transform: translateY(-2px); /* Lift the card slightly on hover */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
 /* .side-container {
@@ -30,14 +45,16 @@
 }
 
 .Card-storyUser {
-  font-size: 20px;
-  font-weight: 600;
+  font-size: 18px;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 5px;
 }
 
 .Card-storyContent {
-  flex: 1;
-  font-size: 15px;
-  margin: var(--s) 0 0;
+  font-size: 16px;
+  color: #555; /* Medium gray text color */
+  margin-bottom: 10px;
   line-height: 175%;
 }
 
@@ -62,6 +79,22 @@
   padding-right: 1.5%;
   cursor: pointer;
   outline: none;
+}
+
+.heart-button:active {
+  animation: pulse 0.4s cubic-bezier(0.4, 0, 0.6, 1);
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
 .u-bold {

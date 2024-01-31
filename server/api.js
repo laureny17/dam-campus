@@ -136,25 +136,34 @@ router.get("/like_count", (req, res) => {
 
 //////// avatar customization ////////
 
-// {userid: user._id, color: color, accessory: accessory}
+// {userid: user._id, beaverType: beaverType}
 router.post("/update_avatar", async (req, res) => {
-  const user = await User.findById(req.body.userid);
-  user.color = req.body.color;
-  user.accessory = req.body.accessory;
+  const user = await User.findById(req.body._id); // Use req.body._id to access user ID
+  user.beaverType = req.body.beaverType;
   await user.save();
   // Send the updated user data in the response
   res.send(user);
 });
 
-// {userid: user._id}
 router.get("/get_avatar_type", (req, res) => {
-  User.findById(req.query.userid).then((user) => {
-    let color = req.user.color;
-    let accessory = req.user.accessory;
-    res.send([color, accessory]);
-  });
-});
+  User.findById(req.query._id)
+    .then((user) => {
+      // Use req.query._id to access user ID
+      let beaverType = user ? user.beaverType : null;
 
+      // Check if beaverType is undefined or null, and provide a default value if needed
+      if (beaverType === undefined || beaverType === null) {
+        beaverType = "default"; // Replace "default" with your desired default value
+      }
+
+      // Send the response as JSON
+      res.json({ beaverType });
+    })
+    .catch((error) => {
+      console.error("Error fetching avatar type:", error);
+      res.status(500).json({ error: "Internal Server Error" });
+    });
+});
 // anything else falls to this "not found" case
 router.all("*", (req, res) => {
   console.log(`API route not found: ${req.method} ${req.url}`);

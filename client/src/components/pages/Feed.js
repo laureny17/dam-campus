@@ -7,25 +7,12 @@ import "./Feed.css";
 import { getBuilding } from "../../canvas-manager";
 import { useNavigate } from "react-router-dom";
 
-// import { GoogleOAuthProvider, GoogleLogin, googleLogout } from "@react-oauth/google";
-// const GOOGLE_CLIENT_ID = "644652111219-c770r1ssmkcpnnp5saugn1dj1cmct07v.apps.googleusercontent.com";
-// // need { userId, handleLogin, handleLogout } inside Feed = () if want login button
-
 const Feed = () => {
   const navigate = useNavigate();
-  // let currUserId;
-  // get("/api/whoami").then((user) => {
-  //   currUserId = user._id;
-  // });
-  // post("/api/updateUserBuilding", { id: currUserId, currBuilding: getBuilding }).then((user) => {});
-
   const { buildingClicked } = useParams();
-
   const [stories, setStories] = useState([]);
 
-  // tried to change this so that it only shows us stories from a certain building number...
   useEffect(() => {
-    console.log(buildingClicked);
     get("/api/stories", { building_number: buildingClicked }).then((storyObjs) => {
       setStories(storyObjs);
     });
@@ -36,7 +23,6 @@ const Feed = () => {
   useEffect(() => {
     get("/api/whoami").then((user) => {
       if (user._id) {
-        // they are registed in the database, and currently logged in.
         setUserId(user._id);
       } else {
         navigate("/");
@@ -44,8 +30,7 @@ const Feed = () => {
     });
   }, []);
 
-  // this gets called when the user pushes "Submit", so their
-  // post gets added to the screen right away
+  // when users clicks submit
   const addNewStory = (storyObj) => {
     setStories([storyObj, ...stories]);
   };
@@ -56,7 +41,7 @@ const Feed = () => {
   if (hasStories) {
     storiesList = stories.map((storyObj) => (
       <Card
-        key={`Card_${storyObj._id}`} // what is this uhhh
+        key={`Card_${storyObj._id}`}
         userId={userId} // Pass userId to Card
         _id={storyObj._id}
         creator_name={storyObj.creator_name}
@@ -71,6 +56,9 @@ const Feed = () => {
 
   return (
     <>
+      <div className="background">
+        <div className="pattern pattern"></div>
+      </div>
       <h1>Building {buildingClicked}</h1>
       <div>
         <NewStory addNewStory={addNewStory} building_number={buildingClicked} />

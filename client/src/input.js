@@ -10,6 +10,9 @@ import {
 
 import { get, post } from "./utilities.js";
 
+const BEAVER_SIZE = 65;
+const SQRT_2 = 1.41;
+
 ////////////////////////////////////
 ///      movement mechanics      ///
 ////////////////////////////////////
@@ -18,10 +21,78 @@ const moveBeaver = (context, beaverDir, mapPosition) => {
   // first, check if the beaver can move in that input dir
   // if there is a wall in front of him, we won't want him to move
   // slightly buggy for diagonals/corners!!!! fix later
-  const nextX = context.canvas.width / 2 + beaverDir.x * 65;
-  const nextY = context.canvas.height / 2 + beaverDir.y * 65;
-  const pix = context.getImageData(nextX, nextY, 1, 1);
-  if (pix.data[0] == BACKGROUND_R && pix.data[1] == BACKGROUND_G && pix.data[2] == BACKGROUND_B) {
+  let next = { x: context.canvas.width / 2, y: context.canvas.height / 2 };
+  let next1 = { x: context.canvas.width / 2, y: context.canvas.height / 2 };
+  let next2 = { x: context.canvas.width / 2, y: context.canvas.height / 2 };
+
+  // // check more collision points for better movement mechanics!
+  if (beaverDir.x === 0 && (beaverDir.y === -1 || beaverDir.y === 1)) {
+    // angle = 0 or 180;
+    // next.x keep
+    next.y += beaverDir.y * BEAVER_SIZE;
+    next1.x += 15;
+    next1.y += beaverDir.y * BEAVER_SIZE;
+    next2.x -= 15;
+    next2.y += beaverDir.y * BEAVER_SIZE;
+  } else if (
+    (beaverDir.x === 1 && beaverDir.y === -1) ||
+    (beaverDir.x === -1 && beaverDir.y === 1)
+  ) {
+    // angle = 45; or 225
+    next.x += (beaverDir.x * BEAVER_SIZE) / SQRT_2;
+    next.y += (beaverDir.y * BEAVER_SIZE) / SQRT_2;
+    next1.x += (beaverDir.x * BEAVER_SIZE) / SQRT_2;
+    next1.y += (beaverDir.y * BEAVER_SIZE) / SQRT_2 + 15 / (SQRT_2 - 0.2);
+    next2.x += (beaverDir.x * BEAVER_SIZE) / SQRT_2 - 15 / (SQRT_2 - 0.2);
+    next2.y += (beaverDir.y * BEAVER_SIZE) / SQRT_2;
+  } else if ((beaverDir.x === 1 || beaverDir.x === -1) && beaverDir.y === 0) {
+    // angle = 90 or 270;
+    // next.y keep
+    next.x += beaverDir.x * BEAVER_SIZE;
+    next1.x += beaverDir.x * BEAVER_SIZE;
+    next1.y += 15;
+    next2.x += beaverDir.x * BEAVER_SIZE;
+    next2.y -= 15;
+  } else if (
+    (beaverDir.x === 1 && beaverDir.y === 1) ||
+    (beaverDir.x === -1 && beaverDir.y === -1)
+  ) {
+    // angle = 135; or 315
+    next.x += (beaverDir.x * BEAVER_SIZE) / SQRT_2;
+    next.y += (beaverDir.y * BEAVER_SIZE) / SQRT_2;
+    next1.x += (beaverDir.x * BEAVER_SIZE) / SQRT_2;
+    next1.y += (beaverDir.y * BEAVER_SIZE) / SQRT_2 - 15 / (SQRT_2 - 0.2);
+    next2.x += (beaverDir.x * BEAVER_SIZE) / SQRT_2 - 15 / (SQRT_2 - 0.2);
+    next2.y += (beaverDir.y * BEAVER_SIZE) / SQRT_2;
+  }
+
+  const pix = context.getImageData(next.x, next.y, 1, 1);
+  const pix1 = context.getImageData(next1.x, next1.y, 1, 1);
+  const pix2 = context.getImageData(next2.x, next2.y, 1, 1);
+
+  const toCheckR = [pix.data[0], pix1.data[0], pix2.data[0]];
+  const toCheckG = [pix.data[1], pix1.data[1], pix2.data[1]];
+  const toCheckB = [pix.data[2], pix1.data[2], pix2.data[2]];
+
+  let canMove = true;
+
+  for (var R1 of toCheckR) {
+    if (R1 !== 255 && R1 !== MITRED_R) {
+      canMove = false;
+    }
+  }
+  for (var G1 of toCheckG) {
+    if (G1 !== 255 && G1 !== MITRED_G) {
+      canMove = false;
+    }
+  }
+  for (var B1 of toCheckB) {
+    if (B1 !== 255 && B1 !== MITRED_B) {
+      canMove = false;
+    }
+  }
+
+  if (!canMove) {
     // console.log("wall"); // testing
     mapPosition.y += beaverDir.y * 2;
     mapPosition.x += beaverDir.x * 2;
@@ -72,7 +143,7 @@ const handleClick = (context, mapPosition) => {
         break;
       }
     }
-    console.log(buildingClicked);
+    // console.log(buildingClicked);
     get("/api/whoami").then((user) => {
       if (user._id) {
         post("/api/update_position", { userid: user._id, x: mapPosition.x, y: mapPosition.y });

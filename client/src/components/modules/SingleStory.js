@@ -7,9 +7,6 @@ import { faHeart as faRegularHeart } from "@fortawesome/free-regular-svg-icons";
 import { faHeart as faSolidHeart } from "@fortawesome/free-solid-svg-icons";
 import { post, get } from "../../utilities";
 
-const outlineHeart = <FontAwesomeIcon icon={faRegularHeart} style={{ color: "#8b959e" }} />;
-const solidHeart = <FontAwesomeIcon icon={faSolidHeart} style={{ color: "#750014" }} />;
-
 // ReactDOM.render(outlineHeart, document.body);
 
 /**

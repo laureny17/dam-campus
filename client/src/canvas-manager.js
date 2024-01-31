@@ -60,7 +60,9 @@ export const draw = (countFrame, canvasRef) => {
   let dNow = new Date();
   let timeNow = dNow.getTime();
 
+  // for when button is clicked
   if (timeNow - timePrev >= 500) {
+    // ^^ prevents duplicate event listeners
     window.addEventListener(
       "click",
       (event) => {

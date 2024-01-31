@@ -1,40 +1,55 @@
 let inputDirection = { x: 0, y: 0 };
 let angle = 0;
-let count = 1; // count for setting up walkFrame
+let count = 0;
+let testcount = 0;
 let walkFrame = 1; // initial frame of beaver walk
+const pressedKeys = new Set();
+
+setInterval(() => {
+  if (pressedKeys.size > 0) {
+    switchWalkFrame();
+  }
+}, 250); // Update every 0.25 seconds
+
+const switchWalkFrame = () => {
+  if (walkFrame == 1) {
+    walkFrame = 2;
+  } else {
+    walkFrame = 1;
+  }
+};
 
 // why is there a long delay in switching to frames upon pressing a new key(s)?
 // ex: do a continual zigzag -> the frame won't switch at all :()
 window.addEventListener("keydown", (event) => {
-  // console.log("walk frame is " + walkFrame); // testing; there is a bug; fix later
-  count = (count % 4) + 1; // cycle 1, 2, 3, 4
-  walkFrame = Math.ceil(count / 2); // switch walk frame from 1 to 2 every 2 counts
-  if (event.key === "ArrowUp" || event.key === "w") {
+  pressedKeys.add(event.key);
+  if (pressedKeys.has("ArrowUp") || pressedKeys.has("w")) {
     inputDirection.y = -1;
   }
-  if (event.key === "ArrowDown" || event.key === "s") {
+  if (pressedKeys.has("ArrowDown") || pressedKeys.has("s")) {
     inputDirection.y = 1;
   }
-  if (event.key === "ArrowRight" || event.key === "d") {
+  if (pressedKeys.has("ArrowRight") || pressedKeys.has("d")) {
     inputDirection.x = 1;
   }
-  if (event.key === "ArrowLeft" || event.key === "a") {
+  if (pressedKeys.has("ArrowLeft") || pressedKeys.has("a")) {
     inputDirection.x = -1;
   }
 });
 
 // on release of key, stop movement
 window.addEventListener("keyup", (event) => {
-  if ((event.key === "ArrowUp" || event.key === "w") && inputDirection.y === -1) {
+  pressedKeys.delete(event.key);
+  if (!pressedKeys.has("ArrowUp") && !pressedKeys.has("w") && inputDirection.y === -1) {
     inputDirection.y = 0;
   }
-  if ((event.key === "ArrowDown" || event.key === "s") && inputDirection.y === 1) {
+  if (!pressedKeys.has("ArrowDown") && !pressedKeys.has("s") && inputDirection.y === 1) {
     inputDirection.y = 0;
   }
-  if ((event.key === "ArrowRight" || event.key === "d") && inputDirection.x === 1) {
+  if (!pressedKeys.has("ArrowRight") && !pressedKeys.has("d") && inputDirection.x === 1) {
     inputDirection.x = 0;
   }
-  if ((event.key === "ArrowLeft" || event.key === "a") && inputDirection.x === -1) {
+  if (!pressedKeys.has("ArrowLeft") && !pressedKeys.has("a") && inputDirection.x === -1) {
     inputDirection.x = 0;
   }
 });

@@ -1,5 +1,48 @@
 @import url("https://fonts.googleapis.com/css2?family=Poor+Story&display=swap");
 
+html {
+  scroll-behavior: smooth;
+}
+
+section {
+  height: 100vh;
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 100vh;
+}
+
+.parallax {
+  z-index: 1;
+  position: absolute;
+  height: 100vh;
+  top: 0;
+}
+
+.bg-sky {
+  z-index: 1;
+  top: 0;
+  height: 100%;
+  max-height: 150vh;
+  min-width: 100vw;
+  overflow-x: hidden;
+  position: relative;
+  padding: 0;
+  margin: 0;
+}
+
+.bg-dome {
+  z-index: 3;
+  width: 100vw;
+  position: relative;
+  padding: 0;
+  margin: 0;
+}
+
 h1 {
   font-size: 70px;
   font-family: "Poor Story", system-ui;
@@ -7,92 +50,216 @@ h1 {
   font-style: normal;
   line-height: 100%;
   margin-bottom: 2%;
+  margin-left: 20vw;
+  margin-right: 20vw;
 }
 
-.first-page {
-  margin-top: 2%;
+/* ---------- */
+/* FIRST PAGE */
+/* ---------- */
+
+.dark-page {
+  z-index: 2;
+  color: #ffffff; /* text color of dark section */
+}
+
+.title {
+  margin-top: 3%;
+  margin-bottom: 4%;
+}
+
+.directions {
+  margin: 0;
 }
 
 h3 {
+  z-index: 2;
+  position: relative;
   font-size: 25px;
   font-family: "Courier New", monospace;
   font-weight: 400;
   font-style: normal;
+  text-align: center;
+  padding: 0;
 }
 
-body {
-  font-size: 20px;
-  font-family: "Courier New", monospace;
-  font-weight: 200;
-  line-height: 200%;
-}
-
-.Title-container {
+.title-container {
   width: 100%;
   height: 100vh;
   overflow-x: hidden;
   text-align: center;
-  background-color: #b0907b;
+  /* background: linear-gradient(to bottom, #997d6b, rgba(255, 0, 0, 0)); */
+  /* where to put above so that google login bar doesn't interfere? or maybe just draw it in that'll be easier */
 }
 
-.Button-container {
-  /* margin-top: 5px;
-  margin-left: 5px; */
-  bottom: 0;
-  left: 0;
-  background-color: #b0907b;
-  /* width: 20px; /* idk why but setting width to any dimension makes it so that
-               only the button and not the entire top bar is clickable */
-}
-
-.Tutorial-container {
-  width: 100%;
-  height: 100vh;
-  overflow-x: hidden;
-  text-align: center;
-}
-
-.section {
-  height: 100vh;
-  /* align-items: center;
-  justify-content: center; */
-}
-
-.color-dark {
-  color: #ffffff; /* text color of dark section */
+.avatar-selection-container {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2%;
+  margin-bottom: 1.5%;
 }
 
 .avatar_canvas {
-  width: 25vw;
-  height: 25vw;
+  z-index: 2;
+  width: 20vw;
+  height: 20vw;
+  min-width: 150px;
+  min-height: 150px;
   /* margin-block: 1.5%; */
-  rotate: 90deg;
   /* object-fit: contain; */
   image-rendering: optimizeQuality;
-  /* position: absolute; */
-  /* filter: blur(0);
-  -webkit-filter: blur(0);
-  transform: translateZ(0);
-  -webkit-transform: translateZ(0); */
 }
 
-.description {
-  font-weight: 300;
+.canv-arrowleft {
+  z-index: 2;
+  flex: 1;
+  margin-left: 25vw;
+  transition: transform 0.4s ease;
+  background-color: transparent;
+  border: none;
+  color: #fff;
+  font-size: 30px;
 }
 
-button {
-  width: fit-content;
-  padding-left: 1.5vw;
-  padding-right: 1.5vw;
-  padding-top: 1vh;
-  padding-bottom: 1vh;
+.canv-arrowleft:hover {
+  transform: scale(1.2);
+}
+
+.canv-arrowright {
+  z-index: 2;
+  flex: 1;
+  margin-right: 25vw;
+  transition: transform 0.4s ease;
+  background-color: transparent;
+  border: none;
+  color: #fff;
+  font-size: 30px;
+}
+
+.canv-arrowright:hover {
+  transform: scale(1.2);
+}
+
+.arrow-down {
+  z-index: 2;
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  background-color: transparent;
+  border: none;
+  color: #3b302a;
+  font-size: 50px;
+  transition: transform 0.2s ease;
+}
+
+.arrow-down:hover {
+  color: #fff;
+  transform: scale(1.05);
+}
+
+.enter-map-button {
+  z-index: 2;
+  position: relative;
+  margin: 0 auto; /* Center the button horizontally */
+  width: 200px;
+  padding: 20px;
   font-family: "Courier New", monospace;
-  font-weight: 200;
+  font-weight: 400;
+  font-size: 18px;
+  color: #fff;
+  background-color: #3b302a;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.3s ease, transform 0.2s ease;
 }
 
-.arrowDown {
-  font-size: 75px;
-  padding-right: 10vw;
-  margin-right: -95vw;
-  margin-top: -3%;
+.enter-map-button:hover {
+  color: #b0907b; /* Text color on hover */
+  background-color: #fff; /* Background color on hover */
+  transform: scale(1.05); /* Slight scale-up on hover */
+}
+
+.google-button-container {
+  z-index: 3;
+  position: relative;
+  display: flex;
+  background-color: #997d6b;
+  bottom: 0;
+  left: 0;
+}
+
+.button-logout {
+  z-index: 3;
+  position: relative;
+  width: fit-content;
+  padding: 2vh 1.5vw; /* Adjust padding as needed */
+  font-family: "Courier New", monospace;
+  font-size: 15px;
+  font-weight: 200;
+  background-color: #3b302a; /* Your desired button color */
+  color: #ffffff; /* Your desired text color */
+  border: none;
+  /* Set border-radius for each corner individually */
+  /* border-top-right-radius: 5px;
+  border-bottom-left-radius: 5px; */
+  border-bottom-right-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.button-logout:hover {
+  background-color: #ffffff; /* Your desired hover color */
+  color: #b0907b; /* Your desired hover text color */
+}
+
+/* ----------- */
+/* SECOND PAGE */
+/* ----------- */
+
+.light-page {
+  height: 100%;
+  position: relative;
+  z-index: 3;
+  color: #3b302a;
+  margin-top: 10vh;
+  /* background-color: #ffffff; */
+}
+
+.bg-dome {
+  z-index: 4;
+  position: sticky;
+}
+
+.tutorial-title {
+  z-index: 4;
+  font-size: 50px;
+}
+
+.tutorial-container {
+  z-index: 4;
+  overflow-x: hidden;
+  text-align: center;
+}
+
+.tutorial-desc {
+  font-size: 20px;
+  margin-left: 27vw;
+  margin-right: 27vw;
+}
+
+.tutorial-main-desc {
+  font-size: 20px;
+  margin-left: 25vw;
+  margin-right: 25vw;
+}
+
+.tutorial-main-desc-2 {
+  font-size: 20px;
+  margin-left: 15vw;
+  margin-right: 15vw;
 }

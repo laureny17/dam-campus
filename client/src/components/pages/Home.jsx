@@ -1,14 +1,41 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { GoogleOAuthProvider, GoogleLogin, googleLogout } from "@react-oauth/google";
 import AvatarCanvas from "./AvatarCanvas";
-import { get } from "../../utilities";
+import { get, post } from "../../utilities";
+
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faCircleChevronDown,
+  faChevronRight,
+  faChevronLeft,
+} from "@fortawesome/free-solid-svg-icons";
+
+const arrowdown = <FontAwesomeIcon icon={faCircleChevronDown} />;
+const arrowright = <FontAwesomeIcon icon={faChevronRight} />;
+const arrowleft = <FontAwesomeIcon icon={faChevronLeft} />;
 
 import "../../utilities.css";
 import "./Home.css";
 
+const bg_sky = new Image(4000, 3000);
+bg_sky.src = "bg_sky_alt.png";
+const bg_dome = new Image(4000, 3000);
+bg_dome.src = "bg_dome.png";
+
 const GOOGLE_CLIENT_ID = "644652111219-c770r1ssmkcpnnp5saugn1dj1cmct07v.apps.googleusercontent.com";
 
 const Home = ({ userId, handleLogin, handleLogout }) => {
+  const [offsetY, setOffsetY] = useState(0); // y scroll amount for parallax effect
+  const handleScroll = () => {
+    setOffsetY(window.pageYOffset);
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  // if user clicks enter map button
   const handleMapClick = (event) => {
     get("/api/whoami").then((user) => {
       if (user._id) {
@@ -19,12 +46,69 @@ const Home = ({ userId, handleLogin, handleLogout }) => {
     });
   };
 
+  const beavers = [
+    "cool_blank",
+    "cool_bow",
+    "cool_glasses",
+    "cool_sunglasses",
+    "warm_blank",
+    "warm_bow",
+    "warm_glasses",
+    "warm_sunglasses",
+  ];
+
+  // default beaver is cool w/ no accessories
+  const [userBeaver, setUserBeaver] = useState("cool_blank");
+  // if user logged in, get their last chosen beaver
+  useEffect(() => {
+    get("/api/whoami")
+      .then((user) => {
+        if (user._id) {
+          get("/api/get_avatar_type", { _id: user._id })
+            .then((userBeaverType) => setUserBeaver(userBeaverType))
+            .catch((error) => console.error("Error fetching avatar type:", error));
+        }
+      })
+      .catch((error) => console.error("Error fetching user:", error));
+  }, []);
+  console.log(userBeaver); // ooooooooo i think it works
+
+  let beaverNum = 0;
+  if (userBeaver !== "cool_blank") {
+    beaverNum = beavers.indexOf(userBeaver);
+  }
+
+  const handleLeftClick = () => {
+    beaverNum--;
+    beaverNum = beaverNum % 8;
+    setUserBeaver(beavers[beaverNum]);
+  };
+
+  const handleRightClick = () => {
+    beaverNum++;
+    beaverNum = beaverNum % 8;
+    setUserBeaver(beavers[beaverNum]);
+  };
+
+  useEffect(() => {
+    get("/api/whoami")
+      .then((user) => {
+        if (user._id) {
+          post("/api/update_avatar", { _id: user._id, beaverType: userBeaver })
+            .then((updatedUser) => {})
+            .catch((error) => console.error("Error updating avatar:", error));
+        }
+      })
+      .catch((error) => console.error("Error fetching user:", error));
+  }, [userBeaver]);
+
   return (
     <>
-      <div className="Button-container">
+      <div className="google-button-container">
         <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
           {userId ? (
             <button
+              className="button-logout"
               onClick={() => {
                 googleLogout();
                 handleLogout();
@@ -37,29 +121,84 @@ const Home = ({ userId, handleLogin, handleLogout }) => {
           )}
         </GoogleOAuthProvider>
       </div>
-      <section className="main">
-        <section className="section color-dark">
+
+      <div className="parallax">
+        <img
+          src={bg_sky.src}
+          className="bg-sky"
+          style={{
+            transform: `translateY(${offsetY * 0.9}px) scale(${1 + offsetY * 0.0002})`,
+          }}
+        ></img>
+        <img
+          src={bg_dome.src}
+          className="bg-dome"
+          // style={{
+          //   transform: `translateY(${-offsetY * 0.05}px)`,
+          // }}
+        ></img>
+      </div>
+
+      <div className="main">
+        <section className="dark-page">
           <div className="Title-container">
-            <h1 className="first-page">Welcome to the Dam Campus.</h1>
-            <h3 className="description">Your explorer:</h3>
-            <AvatarCanvas />
+            <h1 className="title">Welcome to the Dam Campus.</h1>
+            <h3 className="directions">Select your beaver:</h3>
+            {/* avatar stuff below */}
+            <div className="avatar-selection-container">
+              <button className="canv-arrowleft" onClick={handleLeftClick}>
+                {arrowleft}
+              </button>
+              <div className="avatar-canvas">
+                <AvatarCanvas beaverType={userBeaver} />
+              </div>
+              <button className="canv-arrowright" onClick={handleRightClick}>
+                {arrowright}
+              </button>
+            </div>
+            {/* avatar stuff above */}
             <center>
-              {/* <a href="/map"> */}
               <button className="enter-map-button" onClick={handleMapClick}>
                 Enter the map!
               </button>
-              {/* </a> */}
             </center>
-            <div className="arrowDown">&#8623;</div>
+            <a href="#tutorial">
+              <button className="arrow-down">{arrowdown}</button>
+            </a>
           </div>
         </section>
-        <section className="section color-light">
-          <div className="Tutorial-container">
-            <h1>How to Play</h1>
-            <h3>to do</h3>
+        <section className="light-page">
+          <div className="tutorial-container">
+            <h1
+              // style={{ transform: `translateY(${-offsetY * 0.1}px)` }}
+              className="tutorial-title"
+              id="tutorial"
+            >
+              How to Play
+            </h1>
+            <h3 className="tutorial-desc">
+              Whether you're a seasoned student adventurer bursting with fun stories to tell, a
+              pre-frosh with no sense of direction, or just someone passing by out of sheer
+              curiosity, the Dam Campus is your ultimate virtual hub for connecting through the
+              wonders of MIT's campus!
+            </h3>
+            <h3 className="tutorial-main-desc">
+              Join the fun on our homepage where you can personalize your experience by choosing a
+              color and accessory for your beaver. Once you're ready, you'll be sent off to Lobby 7!
+              Returning user? No worries, we've got your back—you'll be dropped right back where you
+              left off.
+            </h3>
+            <h3 className="tutorial-main-desc-2">
+              Keep an eye out for those sneaky red panels in each building—they'll lead you to the
+              corresponding building page, where you can uncover the juiciest secrets of MIT's
+              connected campus and the crazy cool students who roam it. Become a direct contributor
+              by sharing your own tales and fun facts, or simply kick back and enjoy reading through
+              the escapades of your fellow students! Ready to roll? Click that button and let the
+              your adventures begin!
+            </h3>
           </div>
         </section>
-      </section>
+      </div>
     </>
   );
 };
