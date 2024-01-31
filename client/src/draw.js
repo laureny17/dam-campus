@@ -29,8 +29,8 @@ const drawMap = (context, mapPosition) => {
   }
 
   if (bgLoaded === false) {
-    context.drawImage(fullMap, currXPos, currYPos);
     window.setTimeout(bgLoaded, 100);
+    context.drawImage(fullMap, currXPos, currYPos);
   }
 
   let currButtonXPos;
@@ -59,35 +59,17 @@ const drawMap = (context, mapPosition) => {
 ///        draw the beaver       ///
 ////////////////////////////////////
 
-const drawBeaver = (context, walkFrame) => {
+const drawBeaver = (context, walkFrame, userAvatar) => {
   let beaverImg;
   // walk frame 1
   if (walkFrame === 1) {
-    beaverImg = walk_1["cool_blank"];
+    beaverImg = walk_1[userAvatar];
   }
   // else, walk frame 2
   else {
-    beaverImg = walk_2["cool_blank"];
+    beaverImg = walk_2[userAvatar];
   }
   const angle = (getBeaverAngle() / 180) * Math.PI;
-
-  // // find color underneath beaver
-  // const colorUnderneath = context.getImageData(
-  //   context.canvas.width / 2,
-  //   context.canvas.height / 2,
-  //   1,
-  //   1
-  // );
-  // // if color underneath is beige, it means the map hasn't loaded in yet
-  // if (
-  //   colorUnderneath.data[0] === BACKGROUND_R &&
-  //   colorUnderneath.data[1] === BACKGROUND_G &&
-  //   colorUnderneath.data[2] === BACKGROUND_B
-  // ) {
-  //   window.setTimeout(50);
-  // }
-
-  // draw beaver on top of map, rotated at desired angle:
 
   context.save();
   context.translate(context.canvas.width / 2, context.canvas.height / 2);

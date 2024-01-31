@@ -145,7 +145,7 @@ const handleClick = (context, mapPosition) => {
     }
     if (buildingClicked) {
       localStorage.setItem("mapPosition", JSON.stringify(mapPosition));
-      window.location.href = `/feed/${buildingClicked}`;
+      window.open(`/feed/${buildingClicked}`);
     }
   }
 };

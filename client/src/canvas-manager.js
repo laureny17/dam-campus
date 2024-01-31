@@ -1,4 +1,4 @@
-import { updateCoordinates } from "./map-setup.js";
+import { updateCoordinates, saveMapPosition, loadMapPosition } from "./map-setup.js";
 import { getInputDirection, getBeaverAngle, walkFrame } from "./movement-logic.js";
 import { drawMap, drawBeaver } from "./draw.js";
 import { moveBeaver, handleClick } from "./input.js";
@@ -16,6 +16,7 @@ let timePrev = d.getTime();
 let xPos = 2600;
 let yPos = 975;
 let mapPosition = { x: xPos, y: yPos };
+// mapPosition = loadMapPosition();
 
 // updateCoordinates(xPos, yPos, mapPosition);
 
@@ -36,16 +37,18 @@ mapPosition.y -= (desiredHeight - currHeight) / 2;
 // when window is resized, move map position accordingly so that the beaver stays in the same spot
 let changeInWidth;
 let changeInHeight;
-window.addEventListener("resize", () => {
-  changeInWidth = window.innerWidth - currWidth;
-  changeInHeight = window.innerHeight - currHeight;
-  currWidth = window.innerWidth;
-  currHeight = window.innerHeight;
-  mapPosition.x += changeInWidth / 2;
-  mapPosition.y += changeInHeight / 2;
-});
 
 export const draw = (mapPosition, canvasRef) => {
+  const userAvatar = localStorage.getItem("userBeaver") || "defaultAvatar";
+  window.addEventListener("resize", () => {
+    changeInWidth = window.innerWidth - currWidth;
+    changeInHeight = window.innerHeight - currHeight;
+    currWidth = window.innerWidth;
+    currHeight = window.innerHeight;
+    mapPosition.x += changeInWidth / 2;
+    mapPosition.y += changeInHeight / 2;
+  });
+
   canvas = canvasRef.current;
   if (!canvas) {
     return;
@@ -56,7 +59,7 @@ export const draw = (mapPosition, canvasRef) => {
   moveBeaver(context, beaverDir, mapPosition);
 
   drawMap(context, mapPosition);
-  drawBeaver(context, walkFrame);
+  drawBeaver(context, walkFrame, userAvatar);
 
   if (performance.now() % 5000 < 16.67) {
     // Approximately every 5 seconds

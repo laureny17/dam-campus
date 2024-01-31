@@ -6,6 +6,7 @@ import { draw } from "../../canvas-manager";
 // import { handleInput } from "../../input";
 
 const Canvas = (props) => {
+  const userAvatar = localStorage.getItem("userBeaver") || "defaultAvatar";
   const canvasRef = useRef();
 
   const [innerWidth, setInnerWidth] = useState(window.innerWidth);
@@ -22,7 +23,7 @@ const Canvas = (props) => {
 
   useEffect(() => {
     const savedMapPosition = localStorage.getItem("mapPosition");
-    let mapPosition = savedMapPosition ? JSON.parse(savedMapPosition) : { x: 2600, y: 975 };
+    let mapPosition = { x: 2600, y: 975 };
 
     let animationID;
     const renderer = () => {
@@ -32,7 +33,7 @@ const Canvas = (props) => {
     renderer();
 
     return () => window.cancelAnimationFrame(animationID);
-  }, []);
+  }, [draw, userAvatar]);
 
   return <canvas className="map_canvas" ref={canvasRef} width={innerWidth} height={innerHeight} />;
 };

@@ -4,17 +4,6 @@ import { drawAvatar } from "../../avatar-canvas-manager";
 // import { get } from "../../utilities";
 
 const AvatarCanvas = (props) => {
-  // const [userBeaver, setUserBeaver] = useState("cool_blank");
-  // useEffect(() => {
-  //   get("/api/whoami").then((user) => {
-  //     if (user._id) {
-  //       get("/api/get_avatar_type", { _id: user._id }).then((userBeaverType) =>
-  //         setUserBeaver(userBeaverType)
-  //       );
-  //     }
-  //   });
-  // }, []);
-
   const avatarCanvasRef = useRef();
   useEffect(() => {
     let count = 0;
@@ -22,7 +11,7 @@ const AvatarCanvas = (props) => {
 
     const renderer = () => {
       count++;
-      drawAvatar(avatarCanvasRef, props.beaverType); // Pass props.beaverType as the second argument
+      drawAvatar(avatarCanvasRef, props.beaverType);
       animationID = window.requestAnimationFrame(renderer);
     };
     renderer();

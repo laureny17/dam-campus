@@ -12,6 +12,7 @@ import "../../utilities.css";
 import "./Map.css";
 
 const Map = () => {
+  // const userAvatar = localStorage.getItem("userBeaver") || "defaultAvatar";
   const navigate = useNavigate();
   useEffect(() => {
     get("/api/whoami").then((user) => {

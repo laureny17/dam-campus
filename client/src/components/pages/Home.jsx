@@ -58,11 +58,34 @@ const Home = ({ userId, handleLogin, handleLogout }) => {
     "warm_sunglasses",
   ];
 
-  function getRandomInt(max) {
-    return Math.floor(Math.random() * max);
-  }
+  let beaverNum = 0;
+  // const userBeaver = "cool_blank";
 
-  const randomBeaverType = beavers[getRandomInt(8)];
+  const [currentBeaver, setCurrentBeaver] = useState(
+    localStorage.getItem("userBeaver") || "cool_blank"
+  );
+  console.log("orig beaver: " + currentBeaver);
+
+  const handleLeftClick = () => {
+    setCurrentBeaver((prevBeaver) => {
+      let index = beavers.indexOf(prevBeaver);
+      index = (index + beavers.length - 1) % beavers.length;
+      return beavers[index];
+    });
+  };
+
+  const handleRightClick = () => {
+    setCurrentBeaver((prevBeaver) => {
+      let index = beavers.indexOf(prevBeaver);
+      index = (index + 1) % beavers.length;
+      return beavers[index];
+    });
+  };
+
+  useEffect(() => {
+    localStorage.setItem("userBeaver", currentBeaver);
+    console.log("updated to " + currentBeaver);
+  }, [currentBeaver]);
 
   return (
     <>
@@ -101,9 +124,15 @@ const Home = ({ userId, handleLogin, handleLogout }) => {
             <h3 className="directions">Select your beaver:</h3>
             {/* avatar stuff below */}
             <div className="avatar-selection-container">
+              <button className="canv-arrowleft" onClick={handleLeftClick}>
+                {arrowleft}
+              </button>
               <div className="avatar-canvas">
-                <AvatarCanvas beaverType={randomBeaverType} />
+                <AvatarCanvas beaverType={currentBeaver} />
               </div>
+              <button className="canv-arrowright" onClick={handleRightClick}>
+                {arrowright}
+              </button>
             </div>
             {/* avatar stuff above */}
             <center>
