@@ -77,17 +77,17 @@ const moveBeaver = (context, beaverDir, mapPosition) => {
   let canMove = true;
 
   for (var R1 of toCheckR) {
-    if (R1 !== 255 && R1 !== MITRED_R) {
+    if (R1 === BACKGROUND_R) {
       canMove = false;
     }
   }
   for (var G1 of toCheckG) {
-    if (G1 !== 255 && G1 !== MITRED_G) {
+    if (G1 === BACKGROUND_G) {
       canMove = false;
     }
   }
   for (var B1 of toCheckB) {
-    if (B1 !== 255 && B1 !== MITRED_B) {
+    if (B1 === BACKGROUND_B) {
       canMove = false;
     }
   }
