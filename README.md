@@ -1,4 +1,4 @@
-# [Dam Campus](https://dam-campus-mit.onrender.com/#tutorial)
+# [Dam Campus](https://dam-campus-mit.onrender.com)
 
 An interactive campus map and social networking fusion website made for the 2024 Web.Lab competition at MIT.
 
